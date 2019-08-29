@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class IncrementController extends CommandQueryController
 {
     /**
-     * @Route("/user/card-credit", methods={"POST"},
-     *     name="api_user_card_credit_increment",
+     * @Route("/client/discount-points", methods={"POST"},
+     *     name="api_client_discount_points_increment",
      *     requirements={
      *      "farmacia": "\w+",
      *      "cliente": "\w+",
@@ -25,7 +25,7 @@ class IncrementController extends CommandQueryController
      *
      * @SWG\Response(
      *     response=202,
-     *     description="Creditos incrementados con éxito"
+     *     description="Puntos de descuento incrementados con éxito"
      * )
      *
      * @SWG\Response(
@@ -44,7 +44,7 @@ class IncrementController extends CommandQueryController
      *     )
      * )
      *
-     * @SWG\Tag(name="Incrementa creditos")
+     * @SWG\Tag(name="Cliente")
      *
      * @param Request $request
      * @return JsonResponse

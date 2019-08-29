@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="App\Domain\Entity\Point" table="point">
+
+        <id name="uuid" type="uuid" column="uuid"/>
+
+        <many-to-one field="client" target-entity="App\Domain\Entity\Client" inversed-by="points">
+            <join-column name="client_uuid" nullable="false" referenced-column-name="uuid" />
+        </many-to-one>
+
+        <many-to-one field="pharmacyDispensing" target-entity="App\Domain\Entity\Pharmacy" inversed-by="dispensingPoints">
+            <join-column name="pharmacy_dispensing_uuid" nullable="false" referenced-column-name="uuid" />
+        </many-to-one>
+
+        <many-to-one field="pharmacyRedeeming" target-entity="App\Domain\Entity\Pharmacy" inversed-by="redeemingPoints">
+            <join-column name="pharmacy_redeeming_uuid" nullable="true" referenced-column-name="uuid" />
+        </many-to-one>
+
+        <field name="awardedAt" type="datetime" column="awarded_at" nullable="false">
+            <gedmo:timestampable on="create"/>
+        </field>
+
+        <field name="redeemedAt" type="datetime" column="redeemed_at" nullable="true"/>
+    </entity>
+</doctrine-mapping>

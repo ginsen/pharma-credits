@@ -33,13 +33,18 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/pharma_credits
 $ composer install 
 ```
 
+## Cargar datos de prueba
+
+```bash
+$ make load-fixtures
+```
+> Ejecuta `make` para ver todas las opciones.
+
 ## Iniciar demo
 
 ```bash
 $ make start
 ```
-
-> Ejecuta `make` para ver todas las opciones.
 
 ## Lanzar test
 

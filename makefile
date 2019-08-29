@@ -38,6 +38,7 @@ load-fixtures: ## Build the db, control the schema validity, load fixtures and c
 	bin/console doctrine:schema:create
 	bin/console doctrine:schema:validate
 	bin/console doctrine:migration:status
+	bin/console doctrine:fixtures:load -n
 
 cs: ## Launch check style and static analysis
 	vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix
