@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Domain\ValueObj;
-
 
 use Assert\Assertion;
 use Assert\AssertionFailedException;
@@ -15,14 +15,14 @@ class QuantityPoints
 
     /**
      * @param int $quantity
-     * @return QuantityPoints
      * @throws AssertionFailedException
+     * @return QuantityPoints
      */
     public static function fromInt(int $quantity): self
     {
         Assertion::min($quantity, 0, 'Quantity must be greater than zero');
 
-        $instance       = new static();
+        $instance           = new static();
         $instance->quantity = $quantity;
 
         return $instance;

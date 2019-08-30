@@ -38,8 +38,8 @@ class ClientNameType extends Type
     /**
      * @param mixed            $value
      * @param AbstractPlatform $platform
-     * @return ClientName|null
      * @throws AssertionFailedException
+     * @return ClientName|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?ClientName
     {

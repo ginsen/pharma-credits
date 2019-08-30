@@ -29,8 +29,8 @@ class ClientReadModel extends ReadModel implements ClientReadModelInterface
 
     /**
      * @param SpecificationInterface $specification
-     * @return Client|null
      * @throws NonUniqueResultException
+     * @return Client|null
      */
     public function getOneOrNull(SpecificationInterface $specification): ?Client
     {

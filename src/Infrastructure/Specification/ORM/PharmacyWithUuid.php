@@ -21,6 +21,6 @@ class PharmacyWithUuid extends OrmSpecification
 
     public function getConditions()
     {
-        return $this->expr->eq(PharmacyReadModel::ENTITY_ALIAS .'.uuid', ':uuid');
+        return $this->expr->eq(PharmacyReadModel::ENTITY_ALIAS . '.uuid', ':uuid');
     }
 }

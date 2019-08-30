@@ -21,6 +21,6 @@ class ClientWithUuid extends OrmSpecification
 
     public function getConditions()
     {
-        return $this->expr->eq(ClientReadModel::ENTITY_ALIAS .'.uuid', ':uuid');
+        return $this->expr->eq(ClientReadModel::ENTITY_ALIAS . '.uuid', ':uuid');
     }
 }

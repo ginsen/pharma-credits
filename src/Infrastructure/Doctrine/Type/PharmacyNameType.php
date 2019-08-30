@@ -38,8 +38,8 @@ class PharmacyNameType extends Type
     /**
      * @param mixed            $value
      * @param AbstractPlatform $platform
-     * @return PharmacyName|null
      * @throws AssertionFailedException
+     * @return PharmacyName|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?PharmacyName
     {

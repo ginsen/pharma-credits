@@ -32,7 +32,7 @@ final class Client
 
     /**
      * @param UuidInterface $uuid
-     * @param ClientName $name
+     * @param ClientName    $name
      * @return self
      */
     public static function create(UuidInterface $uuid, ClientName $name): self
@@ -70,6 +70,7 @@ final class Client
     public function setName(ClientName $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -81,10 +82,11 @@ final class Client
     public function addPoint(Point $point): self
     {
         if (!$point->isAvailableForClient()) {
-             throw new PointException('Point not allowed for client');
+            throw new PointException('Point not allowed for client');
         }
 
         $this->points->add($point);
+
         return $this;
     }
 
@@ -96,6 +98,7 @@ final class Client
     public function removePoint(Point $point): self
     {
         $this->points->removeElement($point);
+
         return $this;
     }
 
@@ -105,7 +108,7 @@ final class Client
      */
     public function getAvailablePoints(): ArrayCollection
     {
-        return $this->points->filter(function(Point $point) {
+        return $this->points->filter(function (Point $point) {
             return $point->isAvailableForClient();
         });
     }
@@ -116,7 +119,6 @@ final class Client
      */
     public function getCountAvailablePoints(): int
     {
-        return count($this->getAvailablePoints());
+        return \count($this->getAvailablePoints());
     }
 }
-

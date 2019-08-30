@@ -49,8 +49,8 @@ class IncrementController extends CommandQueryController
      * @SWG\Tag(name="Cliente")
      *
      * @param Request $request
-     * @return JsonResponse
      * @throws AssertionFailedException
+     * @return JsonResponse
      */
     public function __invoke(Request $request): JsonResponse
     {

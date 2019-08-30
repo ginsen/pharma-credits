@@ -29,8 +29,8 @@ class PharmacyReadModel extends ReadModel implements PharmacyReadModelInterface
 
     /**
      * @param SpecificationInterface $specification
-     * @return Pharmacy|null
      * @throws NonUniqueResultException
+     * @return Pharmacy|null
      */
     public function getOneOrNull(SpecificationInterface $specification): ?Pharmacy
     {

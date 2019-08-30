@@ -12,7 +12,7 @@ use Ramsey\Uuid\UuidInterface;
 
 class PharmacyFinder
 {
-    /** @var PharmacyReadModelInterface  */
+    /** @var PharmacyReadModelInterface */
     private $readModel;
 
     /** @var PharmacySpecificationFactoryInterface */

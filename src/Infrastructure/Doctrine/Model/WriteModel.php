@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Model;
-
 
 use App\Domain\Common\WriteModel\WriteModelInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class WriteModel implements WriteModelInterface
 {
-    /** @var ObjectManager  */
+    /** @var ObjectManager */
     private $manager;
 
 

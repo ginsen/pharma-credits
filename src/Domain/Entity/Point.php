@@ -39,11 +39,11 @@ class Point
 
 
     /**
-     * @param Client $client
-     * @param Pharmacy $pharmacy
+     * @param Client    $client
+     * @param Pharmacy  $pharmacy
      * @param AwardedAt $time
-     * @return Point
      * @throws \Exception
+     * @return Point
      */
     public static function createAwardPoint(Client $client, Pharmacy $pharmacy, AwardedAt $time): self
     {
@@ -80,7 +80,7 @@ class Point
      * @param Client $client
      * @return Point
      */
-    public function setClient(Client $client): Point
+    public function setClient(Client $client): self
     {
         $client->addPoint($this);
         $this->client = $client;
@@ -102,7 +102,7 @@ class Point
      * @param Pharmacy $pharmacy
      * @return Point
      */
-    public function setPharmacyDispensing(Pharmacy $pharmacy): Point
+    public function setPharmacyDispensing(Pharmacy $pharmacy): self
     {
         $pharmacy->addDispensedPoint($this);
         $this->pharmacyDispensing = $pharmacy;
@@ -124,7 +124,7 @@ class Point
      * @param Pharmacy $pharmacy
      * @return Point
      */
-    public function setPharmacyRedeeming(Pharmacy $pharmacy): Point
+    public function setPharmacyRedeeming(Pharmacy $pharmacy): self
     {
         $pharmacy->addRedeemingPoint($this);
         $this->pharmacyRedeeming = $pharmacy;
@@ -146,9 +146,10 @@ class Point
      * @param AwardedAt $awardedAt
      * @return Point
      */
-    public function setAwardedAt(AwardedAt $awardedAt): Point
+    public function setAwardedAt(AwardedAt $awardedAt): self
     {
         $this->awardedAt = $awardedAt;
+
         return $this;
     }
 
@@ -166,9 +167,10 @@ class Point
      * @param RedeemedAt $redeemedAt
      * @return Point
      */
-    public function setRedeemedAt(RedeemedAt $redeemedAt): Point
+    public function setRedeemedAt(RedeemedAt $redeemedAt): self
     {
         $this->redeemedAt = $redeemedAt;
+
         return $this;
     }
 

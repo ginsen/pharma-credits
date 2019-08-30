@@ -25,8 +25,8 @@ class CreatePointsHandler implements CommandHandlerInterface
     public function __construct(
         ClientFinder $clientFinder,
         PharmacyFinder $pharmacyFinder,
-        WriteModelInterface $writeModel)
-    {
+        WriteModelInterface $writeModel
+    ) {
         $this->clientFinder   = $clientFinder;
         $this->pharmacyFinder = $pharmacyFinder;
         $this->writeModel     = $writeModel;
@@ -42,7 +42,7 @@ class CreatePointsHandler implements CommandHandlerInterface
         $client   = $this->clientFinder->findOneOrFailByUuid($command->clientUuid);
         $pharmacy = $this->pharmacyFinder->findOneOrFailByUuid($command->pharmacyUuid);
 
-        for ($i=0; $command->quantity->toNumber() > $i; $i++) {
+        for ($i=0; $command->quantity->toNumber() > $i; ++$i) {
             $point = Point::createAwardPoint($client, $pharmacy, $command->awardedAt);
             $this->writeModel->save($point, false);
         }

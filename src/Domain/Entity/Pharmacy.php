@@ -35,7 +35,7 @@ final class Pharmacy
 
     /**
      * @param UuidInterface $uuid
-     * @param PharmacyName $name
+     * @param PharmacyName  $name
      * @return self
      */
     public static function create(UuidInterface $uuid, PharmacyName $name): self
@@ -85,6 +85,7 @@ final class Pharmacy
     public function addDispensedPoint(Point $point): self
     {
         $this->dispensingPoints->add($point);
+
         return $this;
     }
 
@@ -96,6 +97,7 @@ final class Pharmacy
     public function removeDispensedPoint(Point $point): self
     {
         $this->dispensingPoints->removeElement($point);
+
         return $this;
     }
 
@@ -116,6 +118,7 @@ final class Pharmacy
     public function addRedeemingPoint(Point $point): self
     {
         $this->redeemingPoints->add($point);
+
         return $this;
     }
 
@@ -127,6 +130,7 @@ final class Pharmacy
     public function removeRedeemingPoint(Point $point): self
     {
         $this->redeemingPoints->removeElement($point);
+
         return $this;
     }
 
