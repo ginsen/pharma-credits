@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\Point;
+namespace App\Application\Command\CreatePoint;
 
 use App\Application\Command\CommandHandlerInterface;
 use App\Domain\Common\WriteModel\WriteModelInterface;
@@ -44,9 +44,9 @@ class CreatePointsHandler implements CommandHandlerInterface
 
         for ($i=0; $command->quantity->toNumber() > $i; ++$i) {
             $point = Point::createAwardPoint($client, $pharmacy, $command->awardedAt);
-            $this->writeModel->save($point, false);
+            $this->writeModel->loadToStorage($point);
         }
 
-        $this->writeModel->flushDb();
+        $this->writeModel->save();
     }
 }

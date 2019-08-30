@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\Point;
+namespace App\Application\Command\CreatePoint;
 
 use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\QuantityPoints;

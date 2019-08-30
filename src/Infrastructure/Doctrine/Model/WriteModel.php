@@ -23,61 +23,14 @@ class WriteModel implements WriteModelInterface
     }
 
 
-    /**
-     * @param $obj
-     * @param bool $flush
-     * @param bool $clear
-     */
-    public function save($obj, bool $flush = true, bool $clear = false): void
+    public function loadToStorage($obj): void
     {
         $this->manager->persist($obj);
-
-        if ($flush) {
-            $this->flushDb();
-        }
-
-        if ($clear) {
-            $this->clearDb();
-        }
     }
 
 
-    /**
-     * @param $obj
-     * @param bool $flush
-     */
-    public function update($obj, bool $flush = true): void
-    {
-        $this->manager->merge($obj);
-
-        if ($flush) {
-            $this->flushDb();
-        }
-    }
-
-
-    /**
-     * @param $obj
-     * @param bool $flush
-     */
-    public function remove($obj, $flush = true): void
-    {
-        $this->manager->remove($obj);
-
-        if ($flush) {
-            $this->flushDb();
-        }
-    }
-
-
-    public function flushDb(): void
+    public function save(): void
     {
         $this->manager->flush();
-    }
-
-
-    public function clearDb(): void
-    {
-        $this->manager->clear();
     }
 }

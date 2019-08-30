@@ -31,14 +31,6 @@ class Point
 
 
     /**
-     * Point constructor.
-     */
-    protected function __construct()
-    {
-    }
-
-
-    /**
      * @param Client    $client
      * @param Pharmacy  $pharmacy
      * @param AwardedAt $time
@@ -55,6 +47,95 @@ class Point
         $instance->setAwardedAt($time);
 
         return $instance;
+    }
+
+
+    public function exchangePoint(Pharmacy $pharmacy, RedeemedAt $time): self
+    {
+        $this->setPharmacyRedeeming($pharmacy);
+        $this->setRedeemedAt($time);
+
+        return $this;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isAvailableForClient(): bool
+    {
+        return empty($this->pharmacyRedeeming);
+    }
+
+
+    /**
+     * @param Client $client
+     * @return Point
+     */
+    protected function setClient(Client $client): self
+    {
+        $client->addPoint($this);
+        $this->client = $client;
+
+        return $this;
+    }
+
+
+    /**
+     * @param Pharmacy $pharmacy
+     * @return Point
+     */
+    protected function setPharmacyDispensing(Pharmacy $pharmacy): self
+    {
+        $pharmacy->addDispensedPoint($this);
+        $this->pharmacyDispensing = $pharmacy;
+
+        return $this;
+    }
+
+
+    /**
+     * @param Pharmacy $pharmacy
+     * @return Point
+     */
+    protected function setPharmacyRedeeming(Pharmacy $pharmacy): self
+    {
+        $pharmacy->addRedeemingPoint($this);
+        $this->pharmacyRedeeming = $pharmacy;
+
+        return $this;
+    }
+
+
+    /**
+     * @param AwardedAt $awardedAt
+     * @return Point
+     */
+    protected function setAwardedAt(AwardedAt $awardedAt): self
+    {
+        $this->awardedAt = $awardedAt;
+
+        return $this;
+    }
+
+
+    /**
+     * @param RedeemedAt $redeemedAt
+     * @return Point
+     */
+    protected function setRedeemedAt(RedeemedAt $redeemedAt): self
+    {
+        $this->redeemedAt = $redeemedAt;
+
+        return $this;
+    }
+
+
+    /**
+     * Point constructor.
+     */
+    protected function __construct()
+    {
     }
 
 
@@ -77,37 +158,11 @@ class Point
 
 
     /**
-     * @param Client $client
-     * @return Point
-     */
-    public function setClient(Client $client): self
-    {
-        $client->addPoint($this);
-        $this->client = $client;
-
-        return $this;
-    }
-
-
-    /**
      * @return Pharmacy
      */
     public function getPharmacyDispensing(): Pharmacy
     {
         return $this->pharmacyDispensing;
-    }
-
-
-    /**
-     * @param Pharmacy $pharmacy
-     * @return Point
-     */
-    public function setPharmacyDispensing(Pharmacy $pharmacy): self
-    {
-        $pharmacy->addDispensedPoint($this);
-        $this->pharmacyDispensing = $pharmacy;
-
-        return $this;
     }
 
 
@@ -121,19 +176,6 @@ class Point
 
 
     /**
-     * @param Pharmacy $pharmacy
-     * @return Point
-     */
-    public function setPharmacyRedeeming(Pharmacy $pharmacy): self
-    {
-        $pharmacy->addRedeemingPoint($this);
-        $this->pharmacyRedeeming = $pharmacy;
-
-        return $this;
-    }
-
-
-    /**
      * @return AwardedAt
      */
     public function getAwardedAt(): AwardedAt
@@ -143,43 +185,10 @@ class Point
 
 
     /**
-     * @param AwardedAt $awardedAt
-     * @return Point
-     */
-    public function setAwardedAt(AwardedAt $awardedAt): self
-    {
-        $this->awardedAt = $awardedAt;
-
-        return $this;
-    }
-
-
-    /**
      * @return RedeemedAt
      */
     public function getRedeemedAt(): RedeemedAt
     {
         return $this->redeemedAt;
-    }
-
-
-    /**
-     * @param RedeemedAt $redeemedAt
-     * @return Point
-     */
-    public function setRedeemedAt(RedeemedAt $redeemedAt): self
-    {
-        $this->redeemedAt = $redeemedAt;
-
-        return $this;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function isAvailableForClient(): bool
-    {
-        return empty($this->pharmacyRedeeming);
     }
 }

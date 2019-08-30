@@ -21,4 +21,16 @@ class QuantityPointsTest extends TestCase
         self::assertInstanceOf(QuantityPoints::class, $quantity);
         self::assertSame(7, $quantity->toNumber());
     }
+
+
+    /**
+     * @test
+     * @throws AssertionFailedException
+     */
+    public function it_should_launch_exception_when_number_is_zero()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        QuantityPoints::fromInt(0);
+    }
 }

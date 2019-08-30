@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\ApiRest\Controller;
+namespace App\UI\Http\ApiRest\Controller\Base;
 
 use League\Tactician\CommandBus;
 

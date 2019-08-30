@@ -49,7 +49,7 @@ class PharmacyTest extends TestCase
      * @test
      * @throws AssertionFailedException|\Exception
      */
-    public function it_should_add_remove_and_get_points()
+    public function it_should_add_and_get_points()
     {
         $uuid     = Uuid::uuid4();
         $name     = PharmacyName::fromStr('pharmacy test');
@@ -57,10 +57,6 @@ class PharmacyTest extends TestCase
 
         $this->addPoints($pharmacy, 2);
         self::assertCount(2, $pharmacy->getDispensedPoints());
-
-        $points = $pharmacy->getDispensedPoints();
-        $pharmacy->removeDispensedPoint($points[0]);
-        self::assertCount(1, $pharmacy->getDispensedPoints());
     }
 
 

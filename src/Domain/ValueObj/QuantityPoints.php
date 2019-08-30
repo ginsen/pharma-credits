@@ -20,7 +20,7 @@ class QuantityPoints
      */
     public static function fromInt(int $quantity): self
     {
-        Assertion::min($quantity, 0, 'Quantity must be greater than zero');
+        Assertion::min($quantity, 1, 'Quantity must be greater than zero');
 
         $instance           = new static();
         $instance->quantity = $quantity;

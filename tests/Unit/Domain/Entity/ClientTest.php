@@ -49,7 +49,7 @@ class ClientTest extends TestCase
      * @test
      * @throws AssertionFailedException|\Exception
      */
-    public function it_should_add_remove_and_get_points()
+    public function it_should_add_and_get_points()
     {
         $uuid   = Uuid::uuid4();
         $name   = ClientName::fromStr('test client');
@@ -57,10 +57,6 @@ class ClientTest extends TestCase
 
         $this->addPoints($client, 2);
         self::assertSame(2, $client->getCountAvailablePoints());
-
-        $points = $client->getAvailablePoints();
-        $client->removePoint($points[0]);
-        self::assertSame(1, $client->getCountAvailablePoints());
     }
 
 

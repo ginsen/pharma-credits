@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Exception\ClientException;
 use App\Domain\Exception\PointException;
 use App\Domain\ValueObj\ClientName;
+use App\Domain\ValueObj\QuantityPoints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
-final class Client
+class Client
 {
     /** @var UuidInterface */
     private $uuid;
@@ -67,7 +69,7 @@ final class Client
      * @param ClientName $name
      * @return self
      */
-    public function setName(ClientName $name): self
+    protected function setName(ClientName $name): self
     {
         $this->name = $name;
 
@@ -92,19 +94,23 @@ final class Client
 
 
     /**
-     * @param Point $point
-     * @return self
+     * @param QuantityPoints $quantity
+     * @return Point[]
      */
-    public function removePoint(Point $point): self
+    public function getPoints(QuantityPoints $quantity): array
     {
-        $this->points->removeElement($point);
+        if (!$this->hasEnoughPoints($quantity)) {
+            throw new ClientException("Client don't has enough points");
+        }
 
-        return $this;
+        $collection = $this->getAvailablePoints();
+
+        return $collection->slice(0, $quantity->toNumber());
     }
 
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Point[]
      */
     public function getAvailablePoints(): ArrayCollection
     {
@@ -120,5 +126,15 @@ final class Client
     public function getCountAvailablePoints(): int
     {
         return \count($this->getAvailablePoints());
+    }
+
+
+    /**
+     * @param QuantityPoints $quantity
+     * @return bool
+     */
+    protected function hasEnoughPoints(QuantityPoints $quantity): bool
+    {
+        return $this->getCountAvailablePoints() >= $quantity->toNumber();
     }
 }

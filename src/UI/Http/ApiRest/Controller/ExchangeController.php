@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\ApiRest\Controller\PharmaCredit;
+namespace App\UI\Http\ApiRest\Controller;
 
-use App\Application\Command\Point\CreatePointsCommand;
-use App\UI\Http\ApiRest\Controller\CommandQueryController;
+use App\Application\Command\ExchangePoint\ExchangePointCommand;
+use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
 use Assert\AssertionFailedException;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IncrementController extends CommandQueryController
+class ExchangeController extends CommandQueryController
 {
     /**
-     * @Route("/cliente/puntos/incrementar", methods={"POST"},
-     *     name="api_client_points_increment",
+     * @Route("/cliente/puntos/canjear", methods={"PUT"},
+     *     name="api_client_points_exchange",
      *     requirements={
      *      "cliente": "\w+",
      *      "farmacia": "\w+",
@@ -26,8 +26,8 @@ class IncrementController extends CommandQueryController
      * )
      *
      * @SWG\Response(
-     *     response=202,
-     *     description="Puntos de descuento incrementados con éxito"
+     *     response=200,
+     *     description="Puntos canjeados con éxito"
      * )
      *
      * @SWG\Response(
@@ -49,21 +49,21 @@ class IncrementController extends CommandQueryController
      * @SWG\Tag(name="Cliente")
      *
      * @param Request $request
-     * @throws AssertionFailedException
      * @return JsonResponse
+     * @throws AssertionFailedException
      */
     public function __invoke(Request $request): JsonResponse
     {
         $params = json_decode($request->getContent(), true);
 
-        $command = new CreatePointsCommand(
+        $command = new ExchangePointCommand(
             $params['cliente'],
             $params['farmacia'],
-            (int) $params['puntos']
+            $params['puntos']
         );
 
         $this->handleCommand($command);
 
-        return JsonResponse::create([], Response::HTTP_ACCEPTED);
+        return JsonResponse::create([], Response::HTTP_OK);
     }
 }

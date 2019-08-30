@@ -8,7 +8,7 @@ use App\Domain\ValueObj\PharmacyName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
-final class Pharmacy
+class Pharmacy
 {
     /** @var UuidInterface */
     private $uuid;
@@ -70,7 +70,7 @@ final class Pharmacy
      * @param PharmacyName $name
      * @return self
      */
-    public function setName(PharmacyName $name): self
+    protected function setName(PharmacyName $name): self
     {
         $this->name = $name;
 
@@ -85,18 +85,6 @@ final class Pharmacy
     public function addDispensedPoint(Point $point): self
     {
         $this->dispensingPoints->add($point);
-
-        return $this;
-    }
-
-
-    /**
-     * @param Point $point
-     * @return self
-     */
-    public function removeDispensedPoint(Point $point): self
-    {
-        $this->dispensingPoints->removeElement($point);
 
         return $this;
     }
@@ -118,18 +106,6 @@ final class Pharmacy
     public function addRedeemingPoint(Point $point): self
     {
         $this->redeemingPoints->add($point);
-
-        return $this;
-    }
-
-
-    /**
-     * @param Point $point
-     * @return self
-     */
-    public function removeRedeemingPoint(Point $point): self
-    {
-        $this->redeemingPoints->removeElement($point);
 
         return $this;
     }
