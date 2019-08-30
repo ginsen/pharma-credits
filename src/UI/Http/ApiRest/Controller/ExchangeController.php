@@ -32,7 +32,7 @@ class ExchangeController extends CommandQueryController
      *
      * @SWG\Response(
      *     response=400,
-     *     description="Fallo de peticion"
+     *     description="Fallo de petición"
      * )
      *
      * @SWG\Parameter(
