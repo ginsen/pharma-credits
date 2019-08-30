@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Exception\DateTime;
+namespace App\Domain\Exception;
 
 class DateTimeException extends \RuntimeException
 {

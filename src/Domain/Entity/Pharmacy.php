@@ -76,4 +76,66 @@ final class Pharmacy
 
         return $this;
     }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function addDispensedPoint(Point $point): self
+    {
+        $this->dispensingPoints->add($point);
+        return $this;
+    }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function removeDispensedPoint(Point $point): self
+    {
+        $this->dispensingPoints->removeElement($point);
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDispensedPoints(): ArrayCollection
+    {
+        return $this->dispensingPoints;
+    }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function addRedeemingPoint(Point $point): self
+    {
+        $this->redeemingPoints->add($point);
+        return $this;
+    }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function removeRedeemingPoint(Point $point): self
+    {
+        $this->redeemingPoints->removeElement($point);
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getRedeemingPoints(): ArrayCollection
+    {
+        return $this->redeemingPoints;
+    }
 }

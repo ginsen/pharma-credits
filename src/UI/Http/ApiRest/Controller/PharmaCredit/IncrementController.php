@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Http\ApiRest\Controller\PharmaCredit;
 
+use App\Application\Command\Point\CreatePointsCommand;
 use App\UI\Http\ApiRest\Controller\CommandQueryController;
+use Assert\AssertionFailedException;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class IncrementController extends CommandQueryController
 {
     /**
-     * @Route("/client/discount-points", methods={"POST"},
-     *     name="api_client_discount_points_increment",
+     * @Route("/cliente/puntos/incrementar", methods={"POST"},
+     *     name="api_client_points_increment",
      *     requirements={
-     *      "farmacia": "\w+",
      *      "cliente": "\w+",
-     *      "creditos": "\d+"
+     *      "farmacia": "\w+",
+     *      "puntos": "\d+"
      *     }
      * )
      *
@@ -30,7 +32,7 @@ class IncrementController extends CommandQueryController
      *
      * @SWG\Response(
      *     response=400,
-     *     description="Bad request"
+     *     description="Fallo de peticion"
      * )
      *
      * @SWG\Parameter(
@@ -38,9 +40,9 @@ class IncrementController extends CommandQueryController
      *     type="object",
      *     in="body",
      *     schema=@SWG\Schema(type="object",
-     *         @SWG\Property(property="farmacia", type="string"),
      *         @SWG\Property(property="cliente", type="string"),
-     *         @SWG\Property(property="creditos", type="integer")
+     *         @SWG\Property(property="farmacia", type="string"),
+     *         @SWG\Property(property="puntos", type="integer")
      *     )
      * )
      *
@@ -48,12 +50,19 @@ class IncrementController extends CommandQueryController
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws AssertionFailedException
      */
     public function __invoke(Request $request): JsonResponse
     {
         $params = json_decode($request->getContent(), true);
 
-        dump($params);
+        $command = new CreatePointsCommand(
+            $params['cliente'],
+            $params['farmacia'],
+            (int) $params['puntos']
+        );
+
+        $this->handleCommand($command);
 
         return JsonResponse::create([], Response::HTTP_ACCEPTED);
     }

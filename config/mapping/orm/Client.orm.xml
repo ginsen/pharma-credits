@@ -6,7 +6,7 @@
 
         <id name="uuid" type="uuid" column="uuid"/>
 
-        <field name="name" type="string" length="60" column="name" nullable="false"/>
+        <field name="name" type="clientName" length="60" column="name" nullable="false"/>
 
         <one-to-many field="points" target-entity="App\Domain\Entity\Point" mapped-by="client">
             <cascade>

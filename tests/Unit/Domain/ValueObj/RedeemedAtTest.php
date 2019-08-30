@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Domain\ValueObj;
 
-use App\Domain\ValueObj\AwardedAt;
+use App\Domain\ValueObj\RedeemedAt;
 use PHPUnit\Framework\TestCase;
 
-class AwardedAtTest extends TestCase
+class RedeemedAtTest extends TestCase
 {
     /**
      * @test
      */
     public function it_should_be_build_by_valid_datetime(): void
     {
-        $time = AwardedAt::now();
-        self::assertInstanceOf(AwardedAt::class, $time);
+        $time = RedeemedAt::now();
+        self::assertInstanceOf(RedeemedAt::class, $time);
         self::assertInstanceOf(\DateTimeImmutable::class, $time->toDateTime());
     }
 }

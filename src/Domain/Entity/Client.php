@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Exception\PointException;
 use App\Domain\ValueObj\ClientName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
@@ -69,7 +70,53 @@ final class Client
     public function setName(ClientName $name): self
     {
         $this->name = $name;
-
         return $this;
     }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function addPoint(Point $point): self
+    {
+        if (!$point->isAvailableForClient()) {
+             throw new PointException('Point not allowed for client');
+        }
+
+        $this->points->add($point);
+        return $this;
+    }
+
+
+    /**
+     * @param Point $point
+     * @return self
+     */
+    public function removePoint(Point $point): self
+    {
+        $this->points->removeElement($point);
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAvailablePoints(): ArrayCollection
+    {
+        return $this->points->filter(function(Point $point) {
+            return $point->isAvailableForClient();
+        });
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getCountAvailablePoints(): int
+    {
+        return count($this->getAvailablePoints());
+    }
 }
+

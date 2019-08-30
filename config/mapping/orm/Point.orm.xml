@@ -18,10 +18,10 @@
             <join-column name="pharmacy_redeeming_uuid" nullable="true" referenced-column-name="uuid" />
         </many-to-one>
 
-        <field name="awardedAt" type="datetime" column="awarded_at" nullable="false">
+        <field name="awardedAt" type="awardedAt" column="awarded_at" nullable="false">
             <gedmo:timestampable on="create"/>
         </field>
 
-        <field name="redeemedAt" type="datetime" column="redeemed_at" nullable="true"/>
+        <field name="redeemedAt" type="redeemedAt" column="redeemed_at" nullable="true"/>
     </entity>
 </doctrine-mapping>

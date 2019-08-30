@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObj;
 
-use App\Domain\Exception\DateTime\DateTimeException;
+use App\Domain\Exception\DateTimeException;
 
 trait TraitDateTime
 {

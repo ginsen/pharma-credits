@@ -6,7 +6,7 @@
 
         <id name="uuid" type="uuid" column="uuid"/>
 
-        <field name="name" type="string" length="80" column="name" nullable="false"/>
+        <field name="name" type="pharmacyName" length="80" column="name" nullable="false"/>
 
         <one-to-many field="dispensingPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyDispensing">
             <cascade>
