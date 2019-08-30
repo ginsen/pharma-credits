@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\ApiRest\Controller;
+namespace App\UI\Http\ApiRest\Controller\Client;
 
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
@@ -19,15 +19,7 @@ class BalanceController extends CommandQueryController
      *     name="api_client_points_balance"
      * )
      *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Consulta de puntos disponibles exitosa"
-     * )
-     *
-     * @SWG\Response(
-     *     response=400,
-     *     description="Fallo de petición"
-     * )
+     * @SWG\Tag(name="Cliente")
      *
      * @SWG\Parameter(
      *     name="cliente",
@@ -37,7 +29,15 @@ class BalanceController extends CommandQueryController
      *     required=true
      * )
      *
-     * @SWG\Tag(name="Cliente")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Consulta de puntos disponibles exitosa"
+     * )
+     *
+     * @SWG\Response(
+     *     response=400,
+     *     description="Fallo de petición"
+     * )
      *
      * @param Request $request
      * @return JsonResponse

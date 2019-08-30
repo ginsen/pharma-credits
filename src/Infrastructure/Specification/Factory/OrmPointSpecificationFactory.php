@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
 
 namespace App\Infrastructure\Specification\Factory;
 
+
 use App\Domain\Common\Specification\SpecificationInterface;
-use App\Domain\Specification\PharmacySpecificationFactoryInterface;
-use App\Infrastructure\Specification\ORM\PharmacyWithUuid;
+use App\Domain\Specification\PointSpecificationFactoryInterface;
+use App\Domain\ValueObj\DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 use Ramsey\Uuid\UuidInterface;
 
-class OrmPharmacySpecificationFactory implements PharmacySpecificationFactoryInterface
+class OrmPointSpecificationFactory implements PointSpecificationFactoryInterface
 {
     /** @var Expr */
     private $expr;
@@ -26,12 +26,11 @@ class OrmPharmacySpecificationFactory implements PharmacySpecificationFactoryInt
     }
 
 
-    /**
-     * @param UuidInterface $uuid
-     * @return SpecificationInterface
-     */
-    public function createForFindOneWithUuid(UuidInterface $uuid): SpecificationInterface
-    {
-        return new PharmacyWithUuid($this->expr, $uuid);
+    public function createForCountPointsByPharmacyBetweenDates(
+        UuidInterface $pharmacyUuid,
+        DateTime $dateIni,
+        DateTime $dateEnd
+    ): SpecificationInterface {
+        // TODO: Implement createForCountPointsByPharmacyBetweenDates() method.
     }
 }

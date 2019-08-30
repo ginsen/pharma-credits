@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\ApiRest\Controller;
+namespace App\UI\Http\ApiRest\Controller\Client;
 
 use App\Application\Command\ExchangePoint\ExchangePointCommand;
+use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
 use Assert\AssertionFailedException;
 use Swagger\Annotations as SWG;
@@ -25,6 +26,21 @@ class ExchangeController extends CommandQueryController
      *     }
      * )
      *
+     * @SWG\Tag(name="Cliente")
+     *
+     * @SWG\Parameter(
+     *     name="datos requeridos",
+     *     type="object",
+     *     in="body",
+     *     required=true,
+     *     description="cliente: Identificador del cliente<br>farmacia: Identificador de la farmacia<br>puntos: Cantidad de puntos a incrementar",
+     *     schema=@SWG\Schema(type="object",
+     *         @SWG\Property(property="cliente", type="string", description="Identificador del cliente"),
+     *         @SWG\Property(property="farmacia", type="string", description="Identificador de la farmacia"),
+     *         @SWG\Property(property="puntos", type="integer", description="Cantidad de puntos a incrementar")
+     *     )
+     * )
+     *
      * @SWG\Response(
      *     response=200,
      *     description="Puntos canjeados con éxito"
@@ -35,22 +51,9 @@ class ExchangeController extends CommandQueryController
      *     description="Fallo de petición"
      * )
      *
-     * @SWG\Parameter(
-     *     name="datos requeridos",
-     *     type="object",
-     *     in="body",
-     *     schema=@SWG\Schema(type="object",
-     *         @SWG\Property(property="cliente", type="string"),
-     *         @SWG\Property(property="farmacia", type="string"),
-     *         @SWG\Property(property="puntos", type="integer")
-     *     )
-     * )
-     *
-     * @SWG\Tag(name="Cliente")
-     *
      * @param Request $request
-     * @return JsonResponse
      * @throws AssertionFailedException
+     * @return JsonResponse
      */
     public function __invoke(Request $request): JsonResponse
     {
@@ -64,6 +67,10 @@ class ExchangeController extends CommandQueryController
 
         $this->handleCommand($command);
 
-        return JsonResponse::create([], Response::HTTP_OK);
+        $query = new ClientBalanceQuery($params['cliente']);
+
+        return JsonResponse::create([
+            'saldo' => $this->handleQuery($query)
+        ], Response::HTTP_OK);
     }
 }

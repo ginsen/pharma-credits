@@ -6,6 +6,7 @@ namespace App\Infrastructure\Doctrine\Model;
 
 use App\Domain\Common\Specification\SpecificationInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder as OrmQueryBuilder;
 
@@ -46,6 +47,25 @@ abstract class ReadModel
             ->setParameters($specification->getParameters());
 
         return $builder->getQuery();
+    }
+
+
+    /**
+     * @param SpecificationInterface $specification
+     * @return int
+     * @throws NonUniqueResultException
+     */
+    protected function getOrmCount(SpecificationInterface $specification): int
+    {
+        $builder = $this->createOrmQueryBuilder();
+
+        $builder
+            ->select(sprintf('count(%s.uuid)', static::ENTITY_ALIAS))
+            ->from($this->class, static::ENTITY_ALIAS)
+            ->where($specification->getConditions())
+            ->setParameters($specification->getParameters());
+
+        return $builder->getQuery()->getSingleScalarResult();
     }
 
 

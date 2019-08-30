@@ -21,7 +21,7 @@ class ExchangePointCommand
     /** @var QuantityPoints */
     public $quantity;
 
-    /** @var RedeemedAt  */
+    /** @var RedeemedAt */
     public $redeemedAt;
 
 
