@@ -72,10 +72,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
         switch (true) {
             case $exception instanceof HttpExceptionInterface:
                 $statusCode = $exception->getStatusCode();
-                break;
 
+                break;
             case $exception instanceof \InvalidArgumentException:
                 $statusCode = Response::HTTP_BAD_REQUEST;
+
                 break;
         }
 

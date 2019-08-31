@@ -11,13 +11,13 @@ use App\Domain\Specification\PointSpecificationFactoryInterface;
 
 class AwardPointDatesHandler implements QueryHandlerInterface
 {
-    /**@var PharmacyFinder */
+    // @var PharmacyFinder
     private $pharmacyFinder;
 
     /** @var PointReadModelInterface */
     private $pointReadModel;
 
-    /** @var PointSpecificationFactoryInterface  */
+    /** @var PointSpecificationFactoryInterface */
     private $pointSpecFactory;
 
 

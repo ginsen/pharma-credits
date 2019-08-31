@@ -58,8 +58,8 @@ class DispensingToClientController extends CommandQueryController
         $query = new AwardPointClientQuery($pharmacy, $client);
 
         return JsonResponse::create([
-            'farmacia' => $pharmacy,
-            'cliente' => $client,
+            'farmacia'         => $pharmacy,
+            'cliente'          => $client,
             'puntos_otorgados' => $this->handleQuery($query),
         ], Response::HTTP_OK);
     }

@@ -29,8 +29,8 @@ class PointReadModel extends ReadModel implements PointReadModelInterface
 
     /**
      * @param SpecificationInterface $specification
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     public function getCount(SpecificationInterface $specification): int
     {

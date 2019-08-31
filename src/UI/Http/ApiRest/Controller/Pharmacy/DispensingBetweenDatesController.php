@@ -67,9 +67,9 @@ class DispensingBetweenDatesController extends CommandQueryController
         $query = new AwardPointDatesQuery($pharmacy, $dateInit, $dateEnd);
 
         return JsonResponse::create([
-            'farmacia' => $pharmacy,
-            'desde' => $dateInit,
-            'hasta' => $dateEnd,
+            'farmacia'         => $pharmacy,
+            'desde'            => $dateInit,
+            'hasta'            => $dateEnd,
             'puntos_otorgados' => $this->handleQuery($query),
         ], Response::HTTP_OK);
     }

@@ -69,7 +69,7 @@ class ExchangeController extends CommandQueryController
         $query = new ClientBalanceQuery($params['cliente']);
 
         return JsonResponse::create([
-            'saldo' => $this->handleQuery($query)
+            'saldo' => $this->handleQuery($query),
         ], Response::HTTP_OK);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Infrastructure\Specification\ORM;
-
 
 use App\Infrastructure\Repository\PointReadModel;
 use App\Infrastructure\Specification\Common\ORM\OrmSpecification;

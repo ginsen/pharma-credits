@@ -52,8 +52,8 @@ abstract class ReadModel
 
     /**
      * @param SpecificationInterface $specification
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     protected function getOrmCount(SpecificationInterface $specification): int
     {

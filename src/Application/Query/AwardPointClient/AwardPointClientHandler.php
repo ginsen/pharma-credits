@@ -15,13 +15,13 @@ class AwardPointClientHandler implements QueryHandlerInterface
     /** @var PharmacyFinder */
     private $pharmacyFinder;
 
-    /**@var ClientFinder */
+    // @var ClientFinder
     private $clientFinder;
 
     /** @var PointReadModelInterface */
     private $pointReadModel;
 
-    /** @var PointSpecificationFactoryInterface  */
+    /** @var PointSpecificationFactoryInterface */
     private $pointSpecFactory;
 
 
