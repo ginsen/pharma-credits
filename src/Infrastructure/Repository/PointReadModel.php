@@ -9,6 +9,7 @@ use App\Domain\Entity\Point;
 use App\Domain\Repository\PointReadModelInterface;
 use App\Infrastructure\Doctrine\Model\ReadModel;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 
 class PointReadModel extends ReadModel implements PointReadModelInterface
 {
@@ -29,9 +30,10 @@ class PointReadModel extends ReadModel implements PointReadModelInterface
     /**
      * @param SpecificationInterface $specification
      * @return int
+     * @throws NonUniqueResultException
      */
     public function getCount(SpecificationInterface $specification): int
     {
-        return $this->getCount($specification);
+        return $this->getOrmCount($specification);
     }
 }

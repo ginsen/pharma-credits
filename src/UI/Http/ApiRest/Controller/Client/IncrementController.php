@@ -32,7 +32,6 @@ class IncrementController extends CommandQueryController
      *     name="datos requeridos",
      *     type="object",
      *     in="body",
-     *     required=true,
      *     description="cliente: Identificador del cliente<br>farmacia: Identificador de la farmacia<br>puntos: Cantidad de puntos a incrementar",
      *     schema=@SWG\Schema(type="object",
      *         @SWG\Property(property="cliente", type="string", description="Identificador del cliente"),

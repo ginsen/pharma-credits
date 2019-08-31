@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\ApiRest\Controller\Pharmacy;
 
+use App\Application\Query\AwardPointClient\AwardPointClientQuery;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,11 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DispensingPointsController extends CommandQueryController
+class DispensingToClientController extends CommandQueryController
 {
     /**
-     * @Route("/farmacia/puntos/otorgados/{farmacia}/{desde}/{hasta}", methods={"GET"},
-     *     name="api_pharmacy_points_dispensing"
+     * @Route("/farmacia/puntos/otorgados/{farmacia}/{cliente}", methods={"GET"},
+     *     name="api_pharmacy_points_dispensing_to_client"
      * )
      *
      * @SWG\Tag(name="Farmacia")
@@ -29,18 +30,10 @@ class DispensingPointsController extends CommandQueryController
      * )
      *
      * @SWG\Parameter(
-     *     name="desde",
+     *     name="cliente",
      *     type="string",
      *     in="path",
-     *     description="fecha de inicio, formato 'aaaa-mm-dd'",
-     *     required=true
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="hasta",
-     *     type="string",
-     *     in="path",
-     *     description="fecha de fin, formato 'aaaa-mm-dd'",
+     *     description="Identificador del cliente",
      *     required=true
      * )
      *
@@ -60,13 +53,14 @@ class DispensingPointsController extends CommandQueryController
     public function __invoke(Request $request): JsonResponse
     {
         $pharmacy = $request->get('farmacia');
-        $dateIni  = $request->get('desde');
-        $dateEnd  = $request->get('hasta');
+        $client   = $request->get('cliente');
+
+        $query = new AwardPointClientQuery($pharmacy, $client);
 
         return JsonResponse::create([
             'farmacia' => $pharmacy,
-            'desde' => $dateIni,
-            'hasta' => $dateEnd,
+            'cliente' => $client,
+            'puntos_otorgados' => $this->handleQuery($query),
         ], Response::HTTP_OK);
     }
 }

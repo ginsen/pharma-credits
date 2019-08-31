@@ -65,7 +65,7 @@ abstract class ReadModel
             ->where($specification->getConditions())
             ->setParameters($specification->getParameters());
 
-        return $builder->getQuery()->getSingleScalarResult();
+        return (int) $builder->getQuery()->getSingleScalarResult();
     }
 
 
