@@ -23,14 +23,19 @@ class WriteModel implements WriteModelInterface
     }
 
 
-    public function loadToStorage($obj): void
+    public function queueToPersist($obj): void
     {
         $this->manager->persist($obj);
     }
 
 
-    public function save(): void
+    public function persist(): void
     {
         $this->manager->flush();
+    }
+
+    public function clearQueue(): void
+    {
+        $this->manager->clear();
     }
 }

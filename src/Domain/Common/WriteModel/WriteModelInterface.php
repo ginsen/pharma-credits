@@ -6,7 +6,9 @@ namespace App\Domain\Common\WriteModel;
 
 interface WriteModelInterface
 {
-    public function loadToStorage($obj): void;
+    public function queueToPersist($obj): void;
 
-    public function save(): void;
+    public function persist(): void;
+
+    public function clearQueue(): void;
 }

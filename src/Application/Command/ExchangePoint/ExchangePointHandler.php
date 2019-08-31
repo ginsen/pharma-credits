@@ -40,9 +40,9 @@ class ExchangePointHandler implements CommandHandlerInterface
 
         foreach ($points as $point) {
             $point->exchangePoint($pharmacy, $command->redeemedAt);
-            $this->writeModel->loadToStorage($point);
+            $this->writeModel->queueToPersist($point);
         }
 
-        $this->writeModel->save();
+        $this->writeModel->persist();
     }
 }

@@ -44,9 +44,9 @@ class CreatePointsHandler implements CommandHandlerInterface
 
         for ($i=0; $command->quantity->toNumber() > $i; ++$i) {
             $point = Point::createAwardPoint($client, $pharmacy, $command->awardedAt);
-            $this->writeModel->loadToStorage($point);
+            $this->writeModel->queueToPersist($point);
         }
 
-        $this->writeModel->save();
+        $this->writeModel->persist();
     }
 }

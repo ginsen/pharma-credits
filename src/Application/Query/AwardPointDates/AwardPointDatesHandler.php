@@ -5,30 +5,22 @@ declare(strict_types=1);
 namespace App\Application\Query\AwardPointDates;
 
 use App\Application\Query\QueryHandlerInterface;
-use App\Domain\Repository\PointReadModelInterface;
 use App\Domain\Service\PharmacyFinder;
-use App\Domain\Specification\PointSpecificationFactoryInterface;
+use App\Domain\Service\PointCountFinder;
 
 class AwardPointDatesHandler implements QueryHandlerInterface
 {
-    // @var PharmacyFinder
+    /** @var PharmacyFinder */
     private $pharmacyFinder;
 
-    /** @var PointReadModelInterface */
-    private $pointReadModel;
-
-    /** @var PointSpecificationFactoryInterface */
-    private $pointSpecFactory;
+    /** @var PointCountFinder */
+    private $pointCountFinder;
 
 
-    public function __construct(
-        PharmacyFinder $pharmacyFinder,
-        PointReadModelInterface $pointReadModel,
-        PointSpecificationFactoryInterface $pointSpecFactory
-    ) {
+    public function __construct(PharmacyFinder $pharmacyFinder, PointCountFinder $pointCountFinder)
+    {
         $this->pharmacyFinder   = $pharmacyFinder;
-        $this->pointReadModel   = $pointReadModel;
-        $this->pointSpecFactory = $pointSpecFactory;
+        $this->pointCountFinder = $pointCountFinder;
     }
 
 
@@ -38,13 +30,12 @@ class AwardPointDatesHandler implements QueryHandlerInterface
      */
     public function __invoke(AwardPointDatesQuery $command): int
     {
-        $pharmacy      = $this->pharmacyFinder->findOneOrFailByUuid($command->pharmacyUuid);
-        $specification = $this->pointSpecFactory->createForCountPointsByPharmacyBetweenDates(
+        $pharmacy = $this->pharmacyFinder->findOneOrFailByUuid($command->pharmacyUuid);
+
+        return $this->pointCountFinder->countAwardPointsBetweenDates(
             $pharmacy,
             $command->dateInit,
             $command->dateEnd
         );
-
-        return $this->pointReadModel->getCount($specification);
     }
 }
