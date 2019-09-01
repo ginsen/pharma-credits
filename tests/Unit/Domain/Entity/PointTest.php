@@ -47,7 +47,7 @@ class PointTest extends TestCase
         $point = Point::createAwardPoint($client, $pharmacy, $awardedAt);
 
         $pharmacyOnRedeeming = $this->makePharmacy('pharmacy on redeeming');
-        $redeemedAt = RedeemedAt::now();
+        $redeemedAt          = RedeemedAt::now();
 
         $point->redeem($pharmacyOnRedeeming, $redeemedAt);
 
@@ -84,7 +84,7 @@ class PointTest extends TestCase
         self::assertSame($pharmacy, $point->getPharmacyAwarding());
 
         $pharmacyOnRedeeming = $this->makePharmacy('pharmacy on redeeming');
-        $redeemedAt = RedeemedAt::now();
+        $redeemedAt          = RedeemedAt::now();
 
         $point->redeem($pharmacyOnRedeeming, $redeemedAt);
 
@@ -109,8 +109,8 @@ class PointTest extends TestCase
 
     /**
      * @param string $name
-     * @return Client
      * @throws AssertionFailedException|\Exception
+     * @return Client
      */
     protected function makeClient(string $name): Client
     {
@@ -120,8 +120,8 @@ class PointTest extends TestCase
 
     /**
      * @param string $name
-     * @return Pharmacy
      * @throws AssertionFailedException|\Exception
+     * @return Pharmacy
      */
     protected function makePharmacy(string $name): Pharmacy
     {

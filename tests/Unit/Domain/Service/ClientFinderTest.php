@@ -10,10 +10,10 @@ use App\Domain\Exception\ClientException;
 use App\Domain\Repository\ClientReadModelInterface;
 use App\Domain\Service\ClientFinder;
 use App\Domain\Specification\ClientSpecificationFactoryInterface;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Mockery as m;
 
 class ClientFinderTest extends TestCase implements ClientReadModelInterface, ClientSpecificationFactoryInterface
 {
@@ -42,7 +42,7 @@ class ClientFinderTest extends TestCase implements ClientReadModelInterface, Cli
     {
         $this->client = m::mock(Client::class);
 
-        $uuid = Uuid::uuid4();
+        $uuid   = Uuid::uuid4();
         $finder = new ClientFinder($this, $this);
 
         self::assertSame($this->client, $finder->findOneOrFailByUuid($uuid));

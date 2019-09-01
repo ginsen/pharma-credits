@@ -11,8 +11,8 @@ use App\Domain\Repository\PointReadModelInterface;
 use App\Domain\Service\PointCountFinder;
 use App\Domain\Specification\PointSpecificationFactoryInterface;
 use App\Domain\ValueObj\AwardedAt;
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 class PointCountFinderTest extends TestCase implements PointSpecificationFactoryInterface
 {

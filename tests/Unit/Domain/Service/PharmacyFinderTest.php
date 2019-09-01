@@ -10,10 +10,10 @@ use App\Domain\Exception\PharmacyException;
 use App\Domain\Repository\PharmacyReadModelInterface;
 use App\Domain\Service\PharmacyFinder;
 use App\Domain\Specification\PharmacySpecificationFactoryInterface;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Mockery as m;
 
 class PharmacyFinderTest extends TestCase implements PharmacyReadModelInterface, PharmacySpecificationFactoryInterface
 {
@@ -42,7 +42,7 @@ class PharmacyFinderTest extends TestCase implements PharmacyReadModelInterface,
     {
         $this->pharmacy = m::mock(Pharmacy::class);
 
-        $uuid = Uuid::uuid4();
+        $uuid   = Uuid::uuid4();
         $finder = new PharmacyFinder($this, $this);
 
         self::assertSame($this->pharmacy, $finder->findOneOrFailByUuid($uuid));
