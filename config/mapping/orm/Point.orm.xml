@@ -10,11 +10,11 @@
             <join-column name="client_uuid" nullable="false" referenced-column-name="uuid" />
         </many-to-one>
 
-        <many-to-one field="pharmacyDispensing" target-entity="App\Domain\Entity\Pharmacy" inversed-by="dispensingPoints">
-            <join-column name="pharmacy_dispensing_uuid" nullable="false" referenced-column-name="uuid" />
+        <many-to-one field="pharmacyAwarding" target-entity="App\Domain\Entity\Pharmacy" inversed-by="awardedPoints">
+            <join-column name="pharmacy_awarding_uuid" nullable="false" referenced-column-name="uuid" />
         </many-to-one>
 
-        <many-to-one field="pharmacyRedeeming" target-entity="App\Domain\Entity\Pharmacy" inversed-by="redeemingPoints">
+        <many-to-one field="pharmacyRedeeming" target-entity="App\Domain\Entity\Pharmacy" inversed-by="redeemedPoints">
             <join-column name="pharmacy_redeeming_uuid" nullable="true" referenced-column-name="uuid" />
         </many-to-one>
 

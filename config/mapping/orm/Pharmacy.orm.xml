@@ -8,7 +8,7 @@
 
         <field name="name" type="pharmacyName" length="80" column="name" nullable="false"/>
 
-        <one-to-many field="dispensingPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyDispensing">
+        <one-to-many field="awardedPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyAwarding">
             <cascade>
                 <cascade-persist/>
             </cascade>
@@ -17,7 +17,7 @@
             </order-by>
         </one-to-many>
 
-        <one-to-many field="redeemingPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyRedeeming">
+        <one-to-many field="redeemedPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyRedeeming">
             <cascade>
                 <cascade-persist/>
             </cascade>

@@ -50,4 +50,4 @@ dc: ## Launch Deptrac to check relations and dependencies between DDD layers
 	vendor/bin/deptrac
 
 test: phpunit.xml.dist ## Launch all functionnal and unit tests
-	bin/phpunit --stop-on-failure
+	bin/phpunit --stop-on-failure --testdox

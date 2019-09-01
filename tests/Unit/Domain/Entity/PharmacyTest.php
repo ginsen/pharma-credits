@@ -10,6 +10,7 @@ use App\Domain\Entity\Point;
 use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\ClientName;
 use App\Domain\ValueObj\PharmacyName;
+use App\Domain\ValueObj\RedeemedAt;
 use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -49,14 +50,34 @@ class PharmacyTest extends TestCase
      * @test
      * @throws AssertionFailedException|\Exception
      */
-    public function it_should_add_and_get_points()
+    public function it_should_obtain_awarded_points()
     {
         $uuid     = Uuid::uuid4();
         $name     = PharmacyName::fromStr('pharmacy test');
         $pharmacy = Pharmacy::create($uuid, $name);
 
         $this->addPoints($pharmacy, 2);
-        self::assertCount(2, $pharmacy->getDispensedPoints());
+        self::assertCount(2, $pharmacy->getAwardedPoints());
+    }
+
+
+    /**
+     * @test
+     * @throws AssertionFailedException|\Exception
+     */
+    public function it_should_obtain_redeemed_points()
+    {
+        $uuid     = Uuid::uuid4();
+        $name     = PharmacyName::fromStr('pharmacy test');
+        $pharmacy = Pharmacy::create($uuid, $name);
+
+        $this->addPoints($pharmacy, 2);
+
+        foreach ($pharmacy->getAwardedPoints() as $point) {
+            $point->redeem($pharmacy, RedeemedAt::now());
+        }
+
+        self::assertCount(2, $pharmacy->getRedeemedPoints());
     }
 
 

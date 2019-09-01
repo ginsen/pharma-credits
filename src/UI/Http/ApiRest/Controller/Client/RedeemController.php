@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\ApiRest\Controller\Client;
 
-use App\Application\Command\ExchangePoint\ExchangePointCommand;
+use App\Application\Command\RedeemPoint\RedeemPointCommand;
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
 use Assert\AssertionFailedException;
@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ExchangeController extends CommandQueryController
+class RedeemController extends CommandQueryController
 {
     /**
      * @Route("/cliente/puntos/canjear", methods={"PUT"},
-     *     name="api_client_points_exchange",
+     *     name="api_client_points_redeem",
      *     requirements={
      *      "cliente": "\w+",
      *      "farmacia": "\w+",
@@ -58,7 +58,7 @@ class ExchangeController extends CommandQueryController
     {
         $params = json_decode($request->getContent(), true);
 
-        $command = new ExchangePointCommand(
+        $command = new RedeemPointCommand(
             $params['cliente'],
             $params['farmacia'],
             $params['puntos']

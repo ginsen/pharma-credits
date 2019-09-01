@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\ExchangePoint;
+namespace App\Application\Command\RedeemPoint;
 
 use App\Application\Command\CommandHandlerInterface;
 use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Service\ClientFinder;
 use App\Domain\Service\PharmacyFinder;
 
-class ExchangePointHandler implements CommandHandlerInterface
+class RedeemPointHandler implements CommandHandlerInterface
 {
     /** @var ClientFinder */
     private $clientFinder;
@@ -32,14 +32,14 @@ class ExchangePointHandler implements CommandHandlerInterface
     }
 
 
-    public function __invoke(ExchangePointCommand $command): void
+    public function __invoke(RedeemPointCommand $command): void
     {
         $client   = $this->clientFinder->findOneOrFailByUuid($command->clientUuid);
         $pharmacy = $this->pharmacyFinder->findOneOrFailByUuid($command->pharmacyUuid);
         $points   = $client->getPoints($command->quantity);
 
         foreach ($points as $point) {
-            $point->exchangePoint($pharmacy, $command->redeemedAt);
+            $point->redeem($pharmacy, $command->redeemedAt);
             $this->writeModel->queueToPersist($point);
         }
 

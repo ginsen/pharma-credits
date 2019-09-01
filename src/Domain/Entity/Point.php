@@ -18,7 +18,7 @@ class Point
     protected $client;
 
     /** @var Pharmacy */
-    protected $pharmacyDispensing;
+    protected $pharmacyAwarding;
 
     /** @var Pharmacy */
     protected $pharmacyRedeeming;
@@ -43,14 +43,14 @@ class Point
 
         $instance->uuid = Uuid::uuid4();
         $instance->setClient($client);
-        $instance->setPharmacyDispensing($pharmacy);
+        $instance->setPharmacyAwarding($pharmacy);
         $instance->setAwardedAt($time);
 
         return $instance;
     }
 
 
-    public function exchangePoint(Pharmacy $pharmacy, RedeemedAt $time): self
+    public function redeem(Pharmacy $pharmacy, RedeemedAt $time): self
     {
         $this->setPharmacyRedeeming($pharmacy);
         $this->setRedeemedAt($time);
@@ -85,10 +85,10 @@ class Point
      * @param Pharmacy $pharmacy
      * @return Point
      */
-    protected function setPharmacyDispensing(Pharmacy $pharmacy): self
+    protected function setPharmacyAwarding(Pharmacy $pharmacy): self
     {
-        $pharmacy->addDispensedPoint($this);
-        $this->pharmacyDispensing = $pharmacy;
+        $pharmacy->addAwardedPoint($this);
+        $this->pharmacyAwarding = $pharmacy;
 
         return $this;
     }
@@ -100,7 +100,7 @@ class Point
      */
     protected function setPharmacyRedeeming(Pharmacy $pharmacy): self
     {
-        $pharmacy->addRedeemingPoint($this);
+        $pharmacy->addRedeemedPoint($this);
         $this->pharmacyRedeeming = $pharmacy;
 
         return $this;
@@ -160,9 +160,9 @@ class Point
     /**
      * @return Pharmacy
      */
-    public function getPharmacyDispensing(): Pharmacy
+    public function getPharmacyAwarding(): Pharmacy
     {
-        return $this->pharmacyDispensing;
+        return $this->pharmacyAwarding;
     }
 
 

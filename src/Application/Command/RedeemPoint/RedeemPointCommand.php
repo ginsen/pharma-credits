@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\ExchangePoint;
+namespace App\Application\Command\RedeemPoint;
 
 use App\Domain\ValueObj\QuantityPoints;
 use App\Domain\ValueObj\RedeemedAt;
@@ -10,7 +10,7 @@ use Assert\AssertionFailedException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class ExchangePointCommand
+class RedeemPointCommand
 {
     /** @var UuidInterface */
     public $clientUuid;

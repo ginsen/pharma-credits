@@ -17,10 +17,10 @@ class Pharmacy
     private $name;
 
     /** @var ArrayCollection */
-    private $dispensingPoints;
+    private $awardedPoints;
 
     /** @var ArrayCollection */
-    private $redeemingPoints;
+    private $redeemedPoints;
 
 
     /**
@@ -28,8 +28,8 @@ class Pharmacy
      */
     private function __construct()
     {
-        $this->dispensingPoints = new ArrayCollection();
-        $this->redeemingPoints  = new ArrayCollection();
+        $this->awardedPoints  = new ArrayCollection();
+        $this->redeemedPoints = new ArrayCollection();
     }
 
 
@@ -82,20 +82,20 @@ class Pharmacy
      * @param Point $point
      * @return self
      */
-    public function addDispensedPoint(Point $point): self
+    public function addAwardedPoint(Point $point): self
     {
-        $this->dispensingPoints->add($point);
+        $this->awardedPoints->add($point);
 
         return $this;
     }
 
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Point[]
      */
-    public function getDispensedPoints(): ArrayCollection
+    public function getAwardedPoints(): ArrayCollection
     {
-        return $this->dispensingPoints;
+        return $this->awardedPoints;
     }
 
 
@@ -103,19 +103,19 @@ class Pharmacy
      * @param Point $point
      * @return self
      */
-    public function addRedeemingPoint(Point $point): self
+    public function addRedeemedPoint(Point $point): self
     {
-        $this->redeemingPoints->add($point);
+        $this->redeemedPoints->add($point);
 
         return $this;
     }
 
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Point[]
      */
-    public function getRedeemingPoints(): ArrayCollection
+    public function getRedeemedPoints(): ArrayCollection
     {
-        return $this->redeemingPoints;
+        return $this->redeemedPoints;
     }
 }
