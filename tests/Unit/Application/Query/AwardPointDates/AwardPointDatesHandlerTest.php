@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Query\AwardPointClient;
+namespace Tests\Unit\Application\Query\AwardPointDates;
 
-use App\Application\Query\AwardPointClient\AwardPointClientHandler;
-use App\Application\Query\AwardPointClient\AwardPointClientQuery;
-use App\Domain\Entity\Client;
+use App\Application\Query\AwardPointDates\AwardPointDatesHandler;
+use App\Application\Query\AwardPointDates\AwardPointDatesQuery;
 use App\Domain\Entity\Pharmacy;
-use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 use App\Domain\Service\PointCountFinderInterface;
+use App\Domain\ValueObj\AwardedAt;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Mockery as m;
 
-class AwardPointClientHandlerTest extends TestCase
+class AwardPointDatesHandlerTest extends TestCase
 {
     /**
      * @test
@@ -23,37 +22,13 @@ class AwardPointClientHandlerTest extends TestCase
      */
     public function it_should_callable()
     {
-        $clientFinder     = $this->getDoubleClientFinder();
         $pharmacyFinder   = $this->getDoublePharmacyFinder();
         $pointCountFinder = $this->getDoublePointCountFinder();
 
-        $handler  = new AwardPointClientHandler($pharmacyFinder, $clientFinder, $pointCountFinder);
+        $handler  = new AwardPointDatesHandler($pharmacyFinder, $pointCountFinder);
         $count = $handler($this->getCommand());
 
         self::assertIsInt($count);
-    }
-
-
-    /**
-     * @return ClientFinderInterface
-     */
-    private function getDoubleClientFinder(): ClientFinderInterface
-    {
-        $clientFinder = m::mock(ClientFinderInterface::class);
-        $clientFinder->shouldReceive('findOneOrFailByUuid')->andReturn($this->getDoubleClient());
-
-        return $clientFinder;
-    }
-
-
-    /**
-     * @return Client
-     */
-    private function getDoubleClient(): Client
-    {
-        $client = m::mock(Client::class);
-
-        return $client;
     }
 
 
@@ -86,22 +61,23 @@ class AwardPointClientHandlerTest extends TestCase
     private function getDoublePointCountFinder(): PointCountFinderInterface
     {
         $pointCountFinder = m::mock(PointCountFinderInterface::class);
-        $pointCountFinder->shouldReceive('countAwardPointsClient')->andReturn(3);
+        $pointCountFinder->shouldReceive('countAwardPointsBetweenDates')->andReturn(3);
 
         return $pointCountFinder;
     }
 
 
     /**
-     * @return AwardPointClientQuery
+     * @return AwardPointDatesQuery
      * @throws \Exception
      */
-    private function getCommand(): AwardPointClientQuery
+    private function getCommand(): AwardPointDatesQuery
     {
-        $clientUuid   = Uuid::uuid4();
         $pharmacyUuid = Uuid::uuid4();
+        $dateInit     = AwardedAt::now();
+        $dateEnd      = AwardedAt::now();
 
-        $command = new AwardPointClientQuery($clientUuid->toString(), $pharmacyUuid->toString());
+        $command = new AwardPointDatesQuery($pharmacyUuid->toString(), $dateInit->toStr(), $dateEnd->toStr());
 
         return $command;
     }
