@@ -42,12 +42,17 @@ $ make load-fixtures
 
 ## Iniciar demo
 
+Levanta el proyecto en `http://127.0.0.1:8000`
+
 ```bash
 $ make start
 ```
 
+Para pararlo, lanzar `make stop`.
+
 ## Lanzar test
 
+Test unitarios.
 ```bash
 $ make test
 ```
