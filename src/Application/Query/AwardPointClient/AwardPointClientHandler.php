@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace App\Application\Query\AwardPointClient;
 
 use App\Application\Query\QueryHandlerInterface;
-use App\Domain\Service\ClientFinder;
-use App\Domain\Service\PharmacyFinder;
-use App\Domain\Service\PointCountFinder;
+use App\Domain\Service\ClientFinderInterface;
+use App\Domain\Service\PharmacyFinderInterface;
+use App\Domain\Service\PointCountFinderInterface;
 
 class AwardPointClientHandler implements QueryHandlerInterface
 {
-    /** @var PharmacyFinder */
+    /** @var PharmacyFinderInterface */
     private $pharmacyFinder;
 
-    /** @var ClientFinder */
+    /** @var ClientFinderInterface */
     private $clientFinder;
 
-    /** @var PointCountFinder */
+    /** @var PointCountFinderInterface */
     private $pointCountFinder;
 
 
     public function __construct(
-        PharmacyFinder $pharmacyFinder,
-        ClientFinder $clientFinder,
-        PointCountFinder $pointCountFinder
+        PharmacyFinderInterface $pharmacyFinder,
+        ClientFinderInterface $clientFinder,
+        PointCountFinderInterface $pointCountFinder
     ) {
         $this->pharmacyFinder   = $pharmacyFinder;
         $this->clientFinder     = $clientFinder;

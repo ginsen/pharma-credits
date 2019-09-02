@@ -10,7 +10,7 @@ use App\Domain\Repository\PointReadModelInterface;
 use App\Domain\Specification\PointSpecificationFactoryInterface;
 use App\Domain\ValueObj\AwardedAt;
 
-class PointCountFinder
+class PointCountFinder implements PointCountFinderInterface
 {
     /** @var PointReadModelInterface */
     private $pointReadModel;

@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Application\Query\ClientBalance;
 
 use App\Application\Query\QueryHandlerInterface;
-use App\Domain\Service\ClientFinder;
+use App\Domain\Service\ClientFinderInterface;
 
 class ClientBalanceHandler implements QueryHandlerInterface
 {
-    /** @var ClientFinder */
+    /** @var ClientFinderInterface */
     private $clientFinder;
 
 
-    public function __construct(ClientFinder $clientFinder)
+    public function __construct(ClientFinderInterface $clientFinder)
     {
         $this->clientFinder = $clientFinder;
     }

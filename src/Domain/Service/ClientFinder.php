@@ -10,7 +10,7 @@ use App\Domain\Repository\ClientReadModelInterface;
 use App\Domain\Specification\ClientSpecificationFactoryInterface;
 use Ramsey\Uuid\UuidInterface;
 
-class ClientFinder
+class ClientFinder implements ClientFinderInterface
 {
     /** @var ClientReadModelInterface */
     private $readModel;

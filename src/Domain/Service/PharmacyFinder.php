@@ -10,7 +10,7 @@ use App\Domain\Repository\PharmacyReadModelInterface;
 use App\Domain\Specification\PharmacySpecificationFactoryInterface;
 use Ramsey\Uuid\UuidInterface;
 
-class PharmacyFinder
+class PharmacyFinder implements PharmacyFinderInterface
 {
     /** @var PharmacyReadModelInterface */
     private $readModel;
