@@ -10,7 +10,7 @@ use App\Domain\Entity\Point;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 
-class CreatePointsHandler implements CommandHandlerInterface
+class CreatePointHandler implements CommandHandlerInterface
 {
     /** @var ClientFinderInterface */
     private $clientFinder;
@@ -34,10 +34,10 @@ class CreatePointsHandler implements CommandHandlerInterface
 
 
     /**
-     * @param CreatePointsCommand $command
+     * @param CreatePointCommand $command
      * @throws \Exception
      */
-    public function __invoke(CreatePointsCommand $command): void
+    public function __invoke(CreatePointCommand $command): void
     {
         $client   = $this->clientFinder->findOneOrFailByUuid($command->clientUuid);
         $pharmacy = $this->pharmacyFinder->findOneOrFailByUuid($command->pharmacyUuid);

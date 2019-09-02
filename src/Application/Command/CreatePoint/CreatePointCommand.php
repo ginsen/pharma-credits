@@ -10,7 +10,7 @@ use Assert\AssertionFailedException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class CreatePointsCommand
+class CreatePointCommand
 {
     /** @var UuidInterface */
     public $clientUuid;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\ApiRest\Controller\Client;
 
-use App\Application\Command\CreatePoint\CreatePointsCommand;
+use App\Application\Command\CreatePoint\CreatePointCommand;
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
 use Assert\AssertionFailedException;
@@ -58,7 +58,7 @@ class IncrementController extends CommandQueryController
     {
         $params = json_decode($request->getContent(), true);
 
-        $command = new CreatePointsCommand(
+        $command = new CreatePointCommand(
             $params['cliente'],
             $params['farmacia'],
             (int) $params['puntos']
