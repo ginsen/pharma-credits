@@ -10,9 +10,9 @@ use App\Domain\Entity\Pharmacy;
 use App\Domain\Service\PharmacyFinderInterface;
 use App\Domain\Service\PointCountFinderInterface;
 use App\Domain\ValueObj\AwardedAt;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Mockery as m;
 
 class AwardPointDatesHandlerTest extends TestCase
 {
@@ -26,7 +26,7 @@ class AwardPointDatesHandlerTest extends TestCase
         $pointCountFinder = $this->getDoublePointCountFinder();
 
         $handler  = new AwardPointDatesHandler($pharmacyFinder, $pointCountFinder);
-        $count = $handler($this->getCommand());
+        $count    = $handler($this->getCommand());
 
         self::assertIsInt($count);
     }
@@ -68,8 +68,8 @@ class AwardPointDatesHandlerTest extends TestCase
 
 
     /**
-     * @return AwardPointDatesQuery
      * @throws \Exception
+     * @return AwardPointDatesQuery
      */
     private function getCommand(): AwardPointDatesQuery
     {

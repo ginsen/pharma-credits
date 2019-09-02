@@ -13,9 +13,9 @@ use App\Domain\Entity\Point;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 use Assert\AssertionFailedException;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Mockery as m;
 
 class RedeemPointHandlerTest extends TestCase
 {
@@ -115,8 +115,8 @@ class RedeemPointHandlerTest extends TestCase
 
 
     /**
-     * @return RedeemPointCommand
      * @throws AssertionFailedException|\Exception
+     * @return RedeemPointCommand
      */
     private function getCommand(): RedeemPointCommand
     {

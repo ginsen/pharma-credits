@@ -8,9 +8,9 @@ use App\Application\Query\ClientBalance\ClientBalanceHandler;
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use App\Domain\Entity\Client;
 use App\Domain\Service\ClientFinderInterface;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Mockery as m;
 
 class ClientBalanceHandlerTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ClientBalanceHandlerTest extends TestCase
         $clientFinder = $this->getDoubleClientFinder();
 
         $handler  = new ClientBalanceHandler($clientFinder);
-        $count = $handler($this->getCommand());
+        $count    = $handler($this->getCommand());
 
         self::assertIsInt($count);
     }
@@ -54,8 +54,8 @@ class ClientBalanceHandlerTest extends TestCase
 
 
     /**
-     * @return ClientBalanceQuery
      * @throws \Exception
+     * @return ClientBalanceQuery
      */
     private function getCommand(): ClientBalanceQuery
     {

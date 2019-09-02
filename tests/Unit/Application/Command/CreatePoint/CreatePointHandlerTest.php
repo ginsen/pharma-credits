@@ -12,8 +12,8 @@ use App\Domain\Entity\Pharmacy;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 use Assert\AssertionFailedException;
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
 class CreatePointHandlerTest extends TestCase
@@ -91,8 +91,8 @@ class CreatePointHandlerTest extends TestCase
 
 
     /**
-     * @return CreatePointCommand
      * @throws AssertionFailedException|\Exception
+     * @return CreatePointCommand
      */
     private function getCommand(): CreatePointCommand
     {
