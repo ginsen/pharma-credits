@@ -12,7 +12,7 @@ use App\Domain\ValueObj\AwardedAt;
 use App\Infrastructure\Specification\ORM\PointWithAwardedAtBetweenDates;
 use App\Infrastructure\Specification\ORM\PointWithClient;
 use App\Infrastructure\Specification\ORM\PointWithoutRedeemed;
-use App\Infrastructure\Specification\ORM\PointWithPharmacyDispensing;
+use App\Infrastructure\Specification\ORM\PointWithPharmacyAwarding;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 
@@ -42,7 +42,7 @@ class OrmPointSpecificationFactory implements PointSpecificationFactoryInterface
         AwardedAt $dateIni,
         AwardedAt $dateEnd
     ): SpecificationInterface {
-        $pointWithPharmacy = new PointWithPharmacyDispensing($this->expr, $pharmacy);
+        $pointWithPharmacy = new PointWithPharmacyAwarding($this->expr, $pharmacy);
         $pointBetweenDates = new PointWithAwardedAtBetweenDates($this->expr, $dateIni, $dateEnd);
         $pointOnlyAwarded  = new PointWithoutRedeemed($this->expr);
 
@@ -61,7 +61,7 @@ class OrmPointSpecificationFactory implements PointSpecificationFactoryInterface
         Pharmacy $pharmacy,
         Client $client
     ): SpecificationInterface {
-        $pointWithPharmacy = new PointWithPharmacyDispensing($this->expr, $pharmacy);
+        $pointWithPharmacy = new PointWithPharmacyAwarding($this->expr, $pharmacy);
         $pointWithClient   = new PointWithClient($this->expr, $client);
 
         return $pointWithPharmacy->andX($pointWithClient);

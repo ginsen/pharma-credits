@@ -22,6 +22,10 @@ class AwardPointDatesQuery
 
     public function __construct(string $uuid, string $dateInit, string $dateEnd)
     {
+        if (preg_match('~^\d{4}-\d{2}-\d{2}$~', $dateEnd)) {
+            $dateEnd .= ' 23:59:59';
+        }
+
         $this->pharmacyUuid = Uuid::fromString($uuid);
         $this->dateInit     = AwardedAt::fromStr($dateInit);
         $this->dateEnd      = AwardedAt::fromStr($dateEnd);

@@ -9,7 +9,7 @@ use App\Infrastructure\Repository\PointReadModel;
 use App\Infrastructure\Specification\Common\ORM\OrmSpecification;
 use Doctrine\ORM\Query\Expr;
 
-class PointWithPharmacyDispensing extends OrmSpecification
+class PointWithPharmacyAwarding extends OrmSpecification
 {
     public function __construct(Expr $expr, Pharmacy $pharmacy)
     {
@@ -21,6 +21,6 @@ class PointWithPharmacyDispensing extends OrmSpecification
 
     public function getConditions()
     {
-        return $this->expr->eq(PointReadModel::ENTITY_ALIAS . '.pharmacyDispensing', ':pharmacy');
+        return $this->expr->eq(PointReadModel::ENTITY_ALIAS . '.pharmacyAwarding', ':pharmacy');
     }
 }
