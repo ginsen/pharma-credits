@@ -10,6 +10,11 @@ TextMate2
 .vscode
 ###< IDE ###
 
+###> Docker config ###
+/docker/nginx/log/access.log
+/docker/nginx/log/error.log
+###< Docker config ###
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

@@ -3,8 +3,8 @@ Prueba de concepto
 
 ## Requerimientos
 
-- [x] php ^7.2
-- [x] MySQL ^5.7 (Pruebas realizadas com MySQL 8.0.17)
+- [x] docker-compose
+- [x] git
 
 ## Instalación
 
@@ -15,16 +15,17 @@ $ git clone https://github.com/ginsen/pharma-credits.git
 $ cd pharma-credits
 ```
 
-Personaliza las variables de entorno.
+## Construir contenedor de Docker
 
 ```bash
-$ cp .env .env.local
+$ docker-compose build
+$ docker-compose up -d
 ```
 
-Remplaza el valor de la variable **DATABASE_URL** por tu configuración de mysql.
+## Entrar en el contenedor
 
-```dotenv
-DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/pharma_credits
+```bash
+$ docker-compose exec web bash
 ```
 
 ## Instalar dependencias
@@ -40,19 +41,21 @@ $ make load-fixtures
 ```
 > Ejecuta `make` para ver todas las opciones.
 
-## Iniciar demo
-
-Levanta el proyecto en `http://127.0.0.1:8000`
-
-```bash
-$ make start
-```
-
-Para pararlo, lanzar `make stop`.
-
 ## Lanzar test
 
-Test unitarios.
+Test unitarios en modo resumen.
+```bash
+$ ./bin/phpunit
+```
+
+Test unitarios con detalle
 ```bash
 $ make test
 ```
+
+## Acceso web
+
+Applicación | Url
+----------- | ---
+API Rest    | http://localhost:8080/api/doc
+Adminer     | http://localhost:8081/?server=mysql&username=root&db=pharma_points
