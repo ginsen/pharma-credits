@@ -59,3 +59,12 @@ Applicación | Url
 ----------- | ---
 API Rest    | http://localhost:8080/api/doc
 Adminer     | http://localhost:8081/?server=mysql&username=root&db=pharma_points
+
+
+Adminer es un visor de base de datos más ligero que phpmyadmin, Para validarse usar:
+
+- Servidor: mysql
+- Usuario: root
+- Contraseña: root
+- Base de datos: pharma_points
+
