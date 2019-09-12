@@ -6,6 +6,7 @@ namespace App\Application\Command\RedeemPoint;
 
 use App\Application\Command\CommandHandlerInterface;
 use App\Domain\Common\WriteModel\WriteModelInterface;
+use App\Domain\Event\Event\PointWasRedeemed;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 
@@ -40,7 +41,9 @@ class RedeemPointHandler implements CommandHandlerInterface
 
         foreach ($points as $point) {
             $point->redeem($pharmacy, $command->redeemedAt);
-            $this->writeModel->queueToPersist($point);
+            $event = new PointWasRedeemed($point);
+
+            $this->writeModel->queueToPersist($point, $event);
         }
 
         $this->writeModel->persist();

@@ -12,6 +12,9 @@ use App\Domain\Entity\Pharmacy;
 use App\Domain\Entity\Point;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
+use App\Domain\ValueObj\AwardedAt;
+use App\Domain\ValueObj\ClientName;
+use App\Domain\ValueObj\PharmacyName;
 use Assert\AssertionFailedException;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -19,6 +22,25 @@ use Ramsey\Uuid\Uuid;
 
 class RedeemPointHandlerTest extends TestCase
 {
+    /** @var Client */
+    private $client;
+
+    /** @var Pharmacy */
+    private $pharmacy;
+
+
+    /**
+     * {@inheritdoc}
+     * @throws AssertionFailedException
+     */
+    protected function setUp()
+    {
+        $this->client   = $this->getClient();
+        $this->pharmacy = $this->getPharmacy();
+        $this->addPoints(2);
+    }
+
+
     /**
      * @test
      * @throws AssertionFailedException|\Exception
@@ -36,68 +58,29 @@ class RedeemPointHandlerTest extends TestCase
     }
 
 
+    /**
+     * @throws \Exception|AssertionFailedException
+     * @return ClientFinderInterface
+     */
     private function getDoubleClientFinder(): ClientFinderInterface
     {
         $clientFinder = m::mock(ClientFinderInterface::class);
-        $clientFinder->shouldReceive('findOneOrFailByUuid')->andReturn($this->getDoubleClient());
+        $clientFinder->shouldReceive('findOneOrFailByUuid')->andReturn($this->client);
 
         return $clientFinder;
     }
 
 
-    private function getDoubleClient(): Client
-    {
-        $client = m::mock(Client::class);
-        $client->shouldReceive('getPoints')->andReturn($this->getArrayPoints());
-
-        return $client;
-    }
-
-
     /**
-     * @return Point[]
-     */
-    private function getArrayPoints(): array
-    {
-        return [
-            $this->getDoublePoint(),
-            $this->getDoublePoint(),
-        ];
-    }
-
-
-    /**
-     * @return Point
-     */
-    private function getDoublePoint(): Point
-    {
-        $point = m::mock(Point::class);
-        $point->shouldReceive('redeem')->andReturnSelf();
-
-        return $point;
-    }
-
-
-    /**
+     * @throws \Exception|AssertionFailedException
      * @return PharmacyFinderInterface
      */
     private function getDoublePharmacyFinder(): PharmacyFinderInterface
     {
         $pharmacyFinder = m::mock(PharmacyFinderInterface::class);
-        $pharmacyFinder->shouldReceive('findOneOrFailByUuid')->andReturn($this->getDoublePharmacy());
+        $pharmacyFinder->shouldReceive('findOneOrFailByUuid')->andReturn($this->pharmacy);
 
         return $pharmacyFinder;
-    }
-
-
-    /**
-     * @return Pharmacy
-     */
-    private function getDoublePharmacy(): Pharmacy
-    {
-        $pharmacy = m::mock(Pharmacy::class);
-
-        return $pharmacy;
     }
 
 
@@ -120,12 +103,55 @@ class RedeemPointHandlerTest extends TestCase
      */
     private function getCommand(): RedeemPointCommand
     {
-        $clientUuid   = Uuid::uuid4();
-        $pharmacyUuid = Uuid::uuid4();
+        $clientUuid   = $this->client->getUuid();
+        $pharmacyUuid = $this->pharmacy->getUuid();
         $quantity     = 2;
 
         $command = new RedeemPointCommand($clientUuid->toString(), $pharmacyUuid->toString(), $quantity);
 
         return $command;
+    }
+
+
+    /**
+     * @throws \Exception|AssertionFailedException
+     * @return Client
+     */
+    private function getClient(): Client
+    {
+        $uuid = Uuid::uuid4();
+        $name = ClientName::fromStr('client');
+
+        $client = Client::create($uuid, $name);
+
+        return $client;
+    }
+
+
+    /**
+     * @throws \Exception|AssertionFailedException
+     * @return Pharmacy
+     */
+    private function getPharmacy(): Pharmacy
+    {
+        $uuid = Uuid::uuid4();
+        $name = PharmacyName::fromStr('pharmacy');
+
+        return Pharmacy::create($uuid, $name);
+    }
+
+
+    /**
+     * @param int $num
+     * @throws \Exception|AssertionFailedException
+     */
+    private function addPoints(int $num)
+    {
+        $time = AwardedAt::now();
+
+        while ($num > 0) {
+            Point::createAwardPoint($this->client, $this->pharmacy, $time);
+            --$num;
+        }
     }
 }

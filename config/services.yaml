@@ -33,6 +33,19 @@ services:
         exclude: '../src/**/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
 
+    ### Domain
+
+    App\Infrastructure\EventSubscriber\LogEventSubscriber:
+        tags:
+            - {name: monolog.logger, channel: domain }
+
+
+    App\Domain\Event\Publisher\DomainEventPublisher:
+        public: true
+        calls:
+            - { method: subscribe, arguments: ['@App\Infrastructure\EventSubscriber\LogEventSubscriber'] }
+
+
 
 
     ### Infrastructure

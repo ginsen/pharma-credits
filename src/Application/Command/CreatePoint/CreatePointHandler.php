@@ -7,6 +7,7 @@ namespace App\Application\Command\CreatePoint;
 use App\Application\Command\CommandHandlerInterface;
 use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\Point;
+use App\Domain\Event\Event\PointWasCreated;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
 
@@ -44,7 +45,9 @@ class CreatePointHandler implements CommandHandlerInterface
 
         for ($i=0; $command->quantity->toNumber() > $i; ++$i) {
             $point = Point::createAwardPoint($client, $pharmacy, $command->awardedAt);
-            $this->writeModel->queueToPersist($point);
+            $event = new PointWasCreated($point);
+
+            $this->writeModel->queueToPersist($point, $event);
         }
 
         $this->writeModel->persist();
