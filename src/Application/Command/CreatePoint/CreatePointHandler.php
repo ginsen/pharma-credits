@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Command\CreatePoint;
 
 use App\Application\Command\CommandHandlerInterface;
-use App\Domain\Common\WriteModel\WriteModelInterface;
+use App\Domain\Common\WriteModel\WriteModelEventInterface;
 use App\Domain\Entity\Point;
 use App\Domain\Event\Event\PointWasCreated;
 use App\Domain\Service\ClientFinderInterface;
@@ -19,14 +19,14 @@ class CreatePointHandler implements CommandHandlerInterface
     /** @var PharmacyFinderInterface */
     private $pharmacyFinder;
 
-    /** @var WriteModelInterface */
+    /** @var WriteModelEventInterface */
     private $writeModel;
 
 
     public function __construct(
         ClientFinderInterface $clientFinder,
         PharmacyFinderInterface $pharmacyFinder,
-        WriteModelInterface $writeModel
+        WriteModelEventInterface $writeModel
     ) {
         $this->clientFinder   = $clientFinder;
         $this->pharmacyFinder = $pharmacyFinder;

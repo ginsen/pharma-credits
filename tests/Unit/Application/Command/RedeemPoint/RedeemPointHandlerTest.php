@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Command\RedeemPoint;
 
 use App\Application\Command\RedeemPoint\RedeemPointCommand;
 use App\Application\Command\RedeemPoint\RedeemPointHandler;
-use App\Domain\Common\WriteModel\WriteModelInterface;
+use App\Domain\Common\WriteModel\WriteModelEventInterface;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
 use App\Domain\Entity\Point;
@@ -49,7 +49,7 @@ class RedeemPointHandlerTest extends TestCase
     {
         $clientFinder   = $this->getDoubleClientFinder();
         $pharmacyFinder = $this->getDoublePharmacyFinder();
-        $writeModel     = $this->getDoubleWriteModel();
+        $writeModel     = $this->getDoubleWriteModelEvent();
 
         $handler  = new RedeemPointHandler($clientFinder, $pharmacyFinder, $writeModel);
         $handler($this->getCommand());
@@ -85,11 +85,11 @@ class RedeemPointHandlerTest extends TestCase
 
 
     /**
-     * @return WriteModelInterface
+     * @return WriteModelEventInterface
      */
-    private function getDoubleWriteModel(): WriteModelInterface
+    private function getDoubleWriteModelEvent(): WriteModelEventInterface
     {
-        $writeModel = m::mock(WriteModelInterface::class);
+        $writeModel = m::mock(WriteModelEventInterface::class);
         $writeModel->shouldReceive('queueToPersist');
         $writeModel->shouldReceive('persist');
 

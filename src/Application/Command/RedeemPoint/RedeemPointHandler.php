@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Command\RedeemPoint;
 
 use App\Application\Command\CommandHandlerInterface;
-use App\Domain\Common\WriteModel\WriteModelInterface;
+use App\Domain\Common\WriteModel\WriteModelEventInterface;
 use App\Domain\Event\Event\PointWasRedeemed;
 use App\Domain\Service\ClientFinderInterface;
 use App\Domain\Service\PharmacyFinderInterface;
@@ -18,14 +18,14 @@ class RedeemPointHandler implements CommandHandlerInterface
     /** @var PharmacyFinderInterface */
     private $pharmacyFinder;
 
-    /** @var WriteModelInterface */
+    /** @var WriteModelEventInterface */
     private $writeModel;
 
 
     public function __construct(
         ClientFinderInterface $clientFinder,
         PharmacyFinderInterface $pharmacyFinder,
-        WriteModelInterface $writeModel
+        WriteModelEventInterface $writeModel
     ) {
         $this->clientFinder   = $clientFinder;
         $this->pharmacyFinder = $pharmacyFinder;
