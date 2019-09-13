@@ -22,6 +22,12 @@ abstract class AbstractEvent implements EventInterface
 
 
     /**
+     * @return string
+     */
+    abstract protected function index(): string;
+
+
+    /**
      * @return string[]
      */
     abstract protected function payload(): array;
@@ -34,8 +40,9 @@ abstract class AbstractEvent implements EventInterface
     {
         $data = [
             'event'      => $this->getName(),
-            'occurredOn' => $this->occurredOn->toStr(),
+            'id'         => $this->index(),
             'payload'    => $this->payload(),
+            'occurredOn' => $this->occurredOn->toStr(),
         ];
 
         return json_encode($data);

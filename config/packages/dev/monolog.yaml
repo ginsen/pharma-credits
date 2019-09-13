@@ -21,4 +21,4 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.pharmacy-point-event.log"
             level: info
-            channels: ["domain"]
+            channels: ["pharmacy-point-event"]

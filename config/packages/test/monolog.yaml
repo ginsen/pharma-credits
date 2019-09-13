@@ -5,3 +5,8 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
             channels: ["!event"]
+        domain_event:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.pharmacy-point-event.log"
+            level: info
+            channels: ["pharmacy-point-event"]

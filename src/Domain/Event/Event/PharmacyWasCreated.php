@@ -31,6 +31,15 @@ class PharmacyWasCreated extends AbstractEvent
 
 
     /**
+     * {@inheritDoc}
+     */
+    protected function index(): string
+    {
+        return $this->uuid->toString();
+    }
+
+
+    /**
      * {@inheritdoc}
      */
     protected function payload(): array

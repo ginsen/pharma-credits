@@ -7,6 +7,7 @@ namespace App\Infrastructure\Doctrine\Model;
 use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Event\Event\EventInterface;
 use App\Domain\Event\Publisher\DomainEventPublisher;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class WriteModel implements WriteModelInterface
@@ -17,8 +18,8 @@ class WriteModel implements WriteModelInterface
     /** @var DomainEventPublisher */
     private $eventPublisher;
 
-    /** @var array */
-    private $events = [];
+    /** @var ArrayCollection */
+    private $events;
 
 
     /**
@@ -30,6 +31,7 @@ class WriteModel implements WriteModelInterface
     {
         $this->manager        = $manager;
         $this->eventPublisher = $eventPublisher;
+        $this->events         = new ArrayCollection();
     }
 
 
@@ -56,7 +58,7 @@ class WriteModel implements WriteModelInterface
 
     protected function queueEvent(EventInterface $event): void
     {
-        $this->events[] = $event;
+        $this->events->add($event);
     }
 
 
@@ -64,14 +66,13 @@ class WriteModel implements WriteModelInterface
     {
         foreach ($this->events as $event) {
             $this->eventPublisher->publish($event);
+            $this->events->removeElement($event);
         }
-
-        $this->clearEvents();
     }
 
 
     protected function clearEvents(): void
     {
-        $this->events = [];
+        $this->events = new ArrayCollection();
     }
 }

@@ -37,7 +37,7 @@ services:
 
     App\Infrastructure\EventSubscriber\LogEventSubscriber:
         tags:
-            - {name: monolog.logger, channel: domain }
+            - {name: monolog.logger, channel: pharmacy-point-event }
 
 
     App\Domain\Event\Publisher\DomainEventPublisher:
