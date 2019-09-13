@@ -55,7 +55,7 @@ class WriteModelEvent implements WriteModelEventInterface
 
     protected function publishEvents(): void
     {
-        foreach ($this->events as $event) {
+        foreach ($this->events->events() as $event) {
             $this->eventPublisher->publish($event);
             $this->events->remove($event);
         }
