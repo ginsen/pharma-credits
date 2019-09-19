@@ -42,7 +42,7 @@ class PointWasCreated extends AbstractEvent
 
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function index(): string
     {

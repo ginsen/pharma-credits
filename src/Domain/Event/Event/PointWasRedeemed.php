@@ -42,7 +42,7 @@ class PointWasRedeemed extends AbstractEvent
 
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function index(): string
     {
