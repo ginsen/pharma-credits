@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class EventCollection
 {
-    /** @var self|null  */
+    /** @var self|null */
     private static $instance = null;
 
     /** @var ArrayCollection */
