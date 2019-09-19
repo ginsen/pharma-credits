@@ -7,6 +7,7 @@ namespace App\Domain\Event\Event;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
 use App\Domain\Entity\Point;
+use App\Domain\Event\Common\AbstractEvent;
 use App\Domain\ValueObj\AwardedAt;
 use Ramsey\Uuid\UuidInterface;
 

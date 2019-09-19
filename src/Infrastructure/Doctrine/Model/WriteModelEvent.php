@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Model;
 
-use App\Domain\Common\WriteModel\WriteModelEventInterface;
 use App\Domain\Common\WriteModel\WriteModelInterface;
-use App\Domain\Event\Event\EventCollection;
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventCollection;
 use App\Domain\Event\Publisher\DomainEventPublisher;
 
-class WriteModelEvent implements WriteModelEventInterface
+class WriteModelEvent implements WriteModelInterface
 {
     /** @var WriteModelInterface */
     private $writeModel;
@@ -26,23 +24,18 @@ class WriteModelEvent implements WriteModelEventInterface
      * WriteModelEvent constructor.
      * @param WriteModelInterface  $writeModel
      * @param DomainEventPublisher $eventPublisher
-     * @param EventCollection      $eventCollection
      */
-    public function __construct(
-        WriteModelInterface $writeModel,
-        DomainEventPublisher $eventPublisher,
-        EventCollection $eventCollection
-    ) {
+    public function __construct(WriteModelInterface $writeModel, DomainEventPublisher $eventPublisher)
+    {
         $this->writeModel     = $writeModel;
         $this->eventPublisher = $eventPublisher;
-        $this->events         = $eventCollection;
+        $this->events         = EventCollection::instance();
     }
 
 
-    public function queueToPersist($entity, EventInterface $event): void
+    public function queueToPersist($entity): void
     {
         $this->writeModel->queueToPersist($entity);
-        $this->events->add($event);
     }
 
 

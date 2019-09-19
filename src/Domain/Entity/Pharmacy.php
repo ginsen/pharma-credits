@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Entity\AggregateRoot\AggregateRoot;
+use App\Domain\Event\Event\PharmacyWasCreated;
 use App\Domain\ValueObj\PharmacyName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
-class Pharmacy
+class Pharmacy extends AggregateRoot
 {
     /** @var UuidInterface */
     private $uuid;
@@ -43,6 +45,8 @@ class Pharmacy
         $instance       = new self();
         $instance->uuid = $uuid;
         $instance->setName($name);
+
+        $instance->queueEvent(new PharmacyWasCreated($instance));
 
         return $instance;
     }

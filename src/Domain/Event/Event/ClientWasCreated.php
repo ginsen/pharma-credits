@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Event\Event;
 
 use App\Domain\Entity\Client;
+use App\Domain\Event\Common\AbstractEvent;
 use App\Domain\ValueObj\ClientName;
 use Ramsey\Uuid\UuidInterface;
 

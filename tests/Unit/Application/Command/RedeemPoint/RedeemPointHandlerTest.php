@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Command\RedeemPoint;
 
 use App\Application\Command\RedeemPoint\RedeemPointCommand;
 use App\Application\Command\RedeemPoint\RedeemPointHandler;
-use App\Domain\Common\WriteModel\WriteModelEventInterface;
+use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
 use App\Domain\Entity\Point;
@@ -85,11 +85,11 @@ class RedeemPointHandlerTest extends TestCase
 
 
     /**
-     * @return WriteModelEventInterface
+     * @return WriteModelInterface
      */
-    private function getDoubleWriteModelEvent(): WriteModelEventInterface
+    private function getDoubleWriteModelEvent(): WriteModelInterface
     {
-        $writeModel = m::mock(WriteModelEventInterface::class);
+        $writeModel = m::mock(WriteModelInterface::class);
         $writeModel->shouldReceive('queueToPersist');
         $writeModel->shouldReceive('persist');
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Event\Event;
 
 use App\Domain\Entity\Pharmacy;
+use App\Domain\Event\Common\AbstractEvent;
 use App\Domain\ValueObj\PharmacyName;
 use Ramsey\Uuid\UuidInterface;
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Entity\AggregateRoot\AggregateRoot;
+use App\Domain\Event\Event\ClientWasCreated;
 use App\Domain\Exception\ClientException;
 use App\Domain\Exception\PointException;
 use App\Domain\ValueObj\ClientName;
@@ -11,7 +13,7 @@ use App\Domain\ValueObj\QuantityPoints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
-class Client
+class Client extends AggregateRoot
 {
     /** @var UuidInterface */
     private $uuid;
@@ -42,6 +44,8 @@ class Client
         $instance       = new self();
         $instance->uuid = $uuid;
         $instance->setName($name);
+
+        $instance->queueEvent(new ClientWasCreated($instance));
 
         return $instance;
     }

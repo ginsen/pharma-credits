@@ -7,7 +7,7 @@ namespace Tests\Unit\Domain\Event\Event;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
 use App\Domain\Entity\Point;
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Event\PointWasCreated;
 use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\ClientName;

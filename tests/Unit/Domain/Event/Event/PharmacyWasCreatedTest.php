@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Domain\Event\Event;
 
 use App\Domain\Entity\Pharmacy;
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Event\PharmacyWasCreated;
 use App\Domain\ValueObj\PharmacyName;
 use PHPUnit\Framework\TestCase;

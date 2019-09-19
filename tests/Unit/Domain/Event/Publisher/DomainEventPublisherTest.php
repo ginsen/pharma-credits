@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Domain\Event\Publisher;
 
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Publisher\DomainEventPublisher;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 use PHPUnit\Framework\TestCase;

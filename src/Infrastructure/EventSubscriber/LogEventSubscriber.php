@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\EventSubscriber;
 
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 use Psr\Log\LoggerInterface;
 

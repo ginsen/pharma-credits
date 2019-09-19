@@ -12,8 +12,10 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
-            $queryBus:   '@tactician.commandbus.query'
-            $commandBus: '@tactician.commandbus.command'
+            $queryBus:        '@tactician.commandbus.query'
+            $commandBus:      '@tactician.commandbus.command'
+            $writeModel:      '@App\Infrastructure\Doctrine\Model\WriteModel'
+            $writeModelEvent: '@App\Infrastructure\Doctrine\Model\WriteModelEvent'
 
     _instanceof:
         App\Application\Command\CommandHandlerInterface:

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\DataFixtures;
 
-use App\Domain\Common\WriteModel\WriteModelEventInterface;
+use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\Pharmacy;
-use App\Domain\Event\Event\PharmacyWasCreated;
 use App\Domain\ValueObj\PharmacyName;
 use Assert\AssertionFailedException;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,17 +14,17 @@ use Ramsey\Uuid\Uuid;
 
 class PharmacyFixtures extends Fixture
 {
-    /** @var WriteModelEventInterface */
+    /** @var WriteModelInterface */
     private $writeModel;
 
 
     /**
      * PharmacyFixtures constructor.
-     * @param WriteModelEventInterface $writeModel
+     * @param WriteModelInterface $writeModelEvent
      */
-    public function __construct(WriteModelEventInterface $writeModel)
+    public function __construct(WriteModelInterface $writeModelEvent)
     {
-        $this->writeModel = $writeModel;
+        $this->writeModel = $writeModelEvent;
     }
 
 
@@ -40,9 +39,7 @@ class PharmacyFixtures extends Fixture
             $pharmacyName = PharmacyName::fromStr(sprintf('Farmacia %s', $name));
 
             $pharmacy = Pharmacy::create($uuid, $pharmacyName);
-            $event    = new PharmacyWasCreated($pharmacy);
-
-            $this->writeModel->queueToPersist($pharmacy, $event);
+            $this->writeModel->queueToPersist($pharmacy);
         }
 
         $this->writeModel->persist();

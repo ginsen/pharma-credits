@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Entity\AggregateRoot\AggregateRoot;
+use App\Domain\Event\Event\PointWasCreated;
+use App\Domain\Event\Event\PointWasRedeemed;
 use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\RedeemedAt;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class Point
+class Point extends AggregateRoot
 {
     /** @var UuidInterface */
     protected $uuid;
@@ -46,6 +49,8 @@ class Point
         $instance->setPharmacyAwarding($pharmacy);
         $instance->setAwardedAt($time);
 
+        $instance->queueEvent(new PointWasCreated($instance));
+
         return $instance;
     }
 
@@ -54,6 +59,8 @@ class Point
     {
         $this->setPharmacyRedeeming($pharmacy);
         $this->setRedeemedAt($time);
+
+        $this->queueEvent(new PointWasRedeemed($this));
 
         return $this;
     }

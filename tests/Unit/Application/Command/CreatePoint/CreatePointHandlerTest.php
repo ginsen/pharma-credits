@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Command\CreatePoint;
 
 use App\Application\Command\CreatePoint\CreatePointCommand;
 use App\Application\Command\CreatePoint\CreatePointHandler;
-use App\Domain\Common\WriteModel\WriteModelEventInterface;
+use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
 use App\Domain\Service\ClientFinderInterface;
@@ -78,11 +78,11 @@ class CreatePointHandlerTest extends TestCase
 
 
     /**
-     * @return WriteModelEventInterface
+     * @return WriteModelInterface
      */
-    private function getDoubleWriteModelEvent(): WriteModelEventInterface
+    private function getDoubleWriteModelEvent(): WriteModelInterface
     {
-        $writeModel = m::mock(WriteModelEventInterface::class);
+        $writeModel = m::mock(WriteModelInterface::class);
         $writeModel->shouldReceive('queueToPersist');
         $writeModel->shouldReceive('persist');
 

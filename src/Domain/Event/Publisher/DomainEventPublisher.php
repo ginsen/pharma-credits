@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Event\Publisher;
 
-use App\Domain\Event\Event\EventInterface;
+use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 
 class DomainEventPublisher

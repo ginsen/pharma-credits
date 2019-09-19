@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\DataFixtures;
 
-use App\Domain\Common\WriteModel\WriteModelEventInterface;
+use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\Client;
-use App\Domain\Event\Event\ClientWasCreated;
 use App\Domain\ValueObj\ClientName;
 use Assert\AssertionFailedException;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,17 +14,17 @@ use Ramsey\Uuid\Uuid;
 
 class ClientFixtures extends Fixture
 {
-    /** @var WriteModelEventInterface */
+    /** @var WriteModelInterface */
     private $writeModel;
 
 
     /**
      * ClientFixtures constructor.
-     * @param WriteModelEventInterface $writeModel
+     * @param WriteModelInterface $writeModelEvent
      */
-    public function __construct(WriteModelEventInterface $writeModel)
+    public function __construct(WriteModelInterface $writeModelEvent)
     {
-        $this->writeModel = $writeModel;
+        $this->writeModel = $writeModelEvent;
     }
 
 
@@ -40,9 +39,7 @@ class ClientFixtures extends Fixture
             $clientName = ClientName::fromStr($name);
 
             $client = Client::create($uuid, $clientName);
-            $event  = new ClientWasCreated($client);
-
-            $this->writeModel->queueToPersist($client, $event);
+            $this->writeModel->queueToPersist($client);
         }
 
         $this->writeModel->persist();

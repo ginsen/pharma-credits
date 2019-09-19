@@ -2,22 +2,44 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Event\Event;
+namespace App\Domain\Event\Common;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 class EventCollection
 {
+    /** @var self|null  */
+    private static $instance = null;
+
     /** @var ArrayCollection */
     private $events;
 
 
     /**
+     * @return EventCollection|null
+     */
+    public static function instance(): self
+    {
+        if (null === static::$instance) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+
+    /**
      * EventCollection constructor.
      */
-    public function __construct()
+    private function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+
+    public function __clone()
+    {
+        throw new \BadMethodCallException('Clone is not supported');
     }
 
 
