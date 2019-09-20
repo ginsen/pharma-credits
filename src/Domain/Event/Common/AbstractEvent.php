@@ -52,7 +52,7 @@ abstract class AbstractEvent implements EventInterface
     /**
      * @return string
      */
-    protected function getName(): string
+    public function getName(): string
     {
         $name = explode('\\', static::class);
 

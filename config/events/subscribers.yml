@@ -1,0 +1,10 @@
+subscribers:
+    LogSubscriber:
+        events:
+            - '*'
+    PersistSubscriber:
+        events:
+            - ClientWasCreated
+            - PharmacyWasCreated
+            - PointWasCreated
+            - PointWasRedeemed

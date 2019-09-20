@@ -23,12 +23,11 @@ class WriteModelEvent implements WriteModelInterface
     /**
      * WriteModelEvent constructor.
      * @param WriteModelInterface  $writeModel
-     * @param DomainEventPublisher $eventPublisher
      */
-    public function __construct(WriteModelInterface $writeModel, DomainEventPublisher $eventPublisher)
+    public function __construct(WriteModelInterface $writeModel)
     {
         $this->writeModel     = $writeModel;
-        $this->eventPublisher = $eventPublisher;
+        $this->eventPublisher = DomainEventPublisher::instance();
         $this->events         = EventCollection::instance();
     }
 

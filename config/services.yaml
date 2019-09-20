@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    domain_event_subscribers_dir: '%kernel.project_dir%/config/events/subscribers.yml'
 
 services:
     # default configuration for services in *this* file
@@ -42,13 +43,6 @@ services:
             - {name: monolog.logger, channel: pharmacy-point-event }
 
 
-    App\Domain\Event\Publisher\DomainEventPublisher:
-        public: true
-        calls:
-            - { method: subscribe, arguments: ['@App\Infrastructure\EventSubscriber\LogEventSubscriber'] }
-
-
-
 
     ### Infrastructure
 
@@ -56,6 +50,10 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.exception' }
 
+    App\Infrastructure\EventSubscriber\InitializeSubscribers:
+        autoconfigure: true
+        arguments:
+            $configFile: '%domain_event_subscribers_dir%'
 
 
     # UI

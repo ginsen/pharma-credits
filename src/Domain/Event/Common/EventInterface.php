@@ -7,4 +7,6 @@ namespace App\Domain\Event\Common;
 interface EventInterface
 {
     public function serialize(): string;
+
+    public function getName(): string;
 }
