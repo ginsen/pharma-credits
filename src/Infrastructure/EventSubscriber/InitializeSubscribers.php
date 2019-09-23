@@ -5,27 +5,23 @@ declare(strict_types=1);
 namespace App\Infrastructure\EventSubscriber;
 
 use App\Domain\Event\Publisher\DomainEventPublisher;
+use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class InitializeSubscribers
 {
-    /** @var array */
-    private $config;
-
+    /** @var DomainEventPublisher */
     private $publisher;
 
 
-    public function __construct(string $configFile)
+    public function __construct()
     {
-        $this->config    = Yaml::parseFile($configFile);
         $this->publisher = DomainEventPublisher::instance();
-
-        $this->loadSubscribers();
     }
 
 
-    private function loadSubscribers(): void
+    public function loadSubscriber(DomainEventSubscriberInterface $subscriber): void
     {
-        dump($this->config);
+        $this->publisher->subscribe($subscriber);
     }
 }

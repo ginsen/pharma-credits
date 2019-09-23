@@ -6,11 +6,12 @@ namespace App\Domain\Entity\AggregateRoot;
 
 use App\Domain\Event\Common\EventCollection;
 use App\Domain\Event\Common\EventInterface;
+use App\Domain\Event\Publisher\DomainEventPublisher;
 
-abstract class AggregateRoot
+abstract class AggregateRoot implements EntityInterface
 {
-    public function queueEvent(EventInterface $event): void
+    public function publish(EventInterface $event): void
     {
-        EventCollection::instance()->add($event);
+        DomainEventPublisher::instance()->publish($event, $this);
     }
 }

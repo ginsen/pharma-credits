@@ -20,7 +20,7 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
      */
     public function it_should_added_subscriber_and_publish_event()
     {
-        $domainEventPublisher = new DomainEventPublisher();
+        $domainEventPublisher = DomainEventPublisher::instance();
         $domainEventPublisher->subscribe($this);
 
         $domainEventPublisher->publish($this);
@@ -28,7 +28,7 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
     }
 
 
-    public function handle(EventInterface $event): void
+    public function handle(EventInterface $event, $data = null): void
     {
         $this->handleSubscriber = true;
     }
@@ -37,5 +37,11 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
     public function serialize(): string
     {
         return '';
+    }
+
+
+    public static function eventName(): string
+    {
+        return 'event';
     }
 }

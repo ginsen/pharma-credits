@@ -9,13 +9,9 @@ use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 
 /**
  * Class DomainEventPublisher
- * Patterns [Mediator, Singleton]
  */
 class DomainEventPublisher
 {
-    const ALL_EVENTS = '*';
-
-
     /** @var self|null */
     private static $instance = null;
 
@@ -41,7 +37,7 @@ class DomainEventPublisher
      */
     private function __construct()
     {
-        $this->subscribers[self::ALL_EVENTS] = [];
+        $this->subscribers = [];
     }
 
 
@@ -51,46 +47,16 @@ class DomainEventPublisher
     }
 
 
-    public function subscribe(DomainEventSubscriberInterface $subscriber, string $event = self::ALL_EVENTS): void
+    public function subscribe(DomainEventSubscriberInterface $subscriber): void
     {
-        $this->initEventGroup($event);
-        $this->subscribers[$event][] = $subscriber;
+        $this->subscribers = $subscriber;
     }
 
 
-    public function unsubscribe(DomainEventSubscriberInterface $subscriber, string $event = self::ALL_EVENTS): void
+    public function publish(EventInterface $event, $data = null)
     {
-        foreach ($this->getSubscribers($event) as $key => $observer) {
-            if ($observer === $subscriber) {
-                unset($this->subscribers[$event][$key]);
-            }
+        foreach ($this->subscribers as $subscriber) {
+            $subscriber->handle($event, $data);
         }
-    }
-
-
-    public function publish(EventInterface $event)
-    {
-        foreach ($this->getSubscribers($event->getName()) as $subscriber) {
-            $subscriber->handle($event);
-        }
-    }
-
-
-    private function initEventGroup(string $event): void
-    {
-        if (!isset($this->subscribers[$event])) {
-            $this->subscribers[$event] = [];
-        }
-    }
-
-
-    private function getSubscribers(string $event): array
-    {
-        $this->initEventGroup($event);
-
-        $group = $this->subscribers[$event];
-        $all   = $this->subscribers[self::ALL_EVENTS];
-
-        return array_merge($group, $all);
     }
 }

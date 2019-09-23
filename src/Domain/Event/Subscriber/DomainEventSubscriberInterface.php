@@ -8,5 +8,5 @@ use App\Domain\Event\Common\EventInterface;
 
 interface DomainEventSubscriberInterface
 {
-    public function handle(EventInterface $event): void;
+    public function handle(EventInterface $event, $data = null): void;
 }

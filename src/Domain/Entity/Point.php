@@ -49,7 +49,7 @@ class Point extends AggregateRoot
         $instance->setPharmacyAwarding($pharmacy);
         $instance->setAwardedAt($time);
 
-        $instance->queueEvent(new PointWasCreated($instance));
+        $instance->publish(new PointWasCreated($instance));
 
         return $instance;
     }
@@ -60,7 +60,7 @@ class Point extends AggregateRoot
         $this->setPharmacyRedeeming($pharmacy);
         $this->setRedeemedAt($time);
 
-        $this->queueEvent(new PointWasRedeemed($this));
+        $this->publish(new PointWasRedeemed($this));
 
         return $this;
     }

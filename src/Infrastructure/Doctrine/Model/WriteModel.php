@@ -22,21 +22,23 @@ class WriteModel implements WriteModelInterface
         $this->manager = $manager;
     }
 
-
-    public function queueToPersist($entity): void
+    public function save($entity): void
     {
         $this->manager->persist($entity);
-    }
-
-
-    public function persist(): void
-    {
         $this->manager->flush();
     }
 
 
-    public function clearQueue(): void
+    public function update($entity): void
     {
-        $this->manager->clear();
+        $this->manager->merge($entity);
+        $this->manager->flush();
+    }
+
+
+    public function delete($entity): void
+    {
+        $this->manager->remove($entity);
+        $this->manager->flush();
     }
 }

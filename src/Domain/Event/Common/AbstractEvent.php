@@ -39,7 +39,7 @@ abstract class AbstractEvent implements EventInterface
     public function serialize(): string
     {
         $data = [
-            'event'      => $this->getName(),
+            'event'      => static::eventName(),
             'id'         => $this->index(),
             'payload'    => $this->payload(),
             'occurredOn' => $this->occurredOn->toStr(),
@@ -52,7 +52,7 @@ abstract class AbstractEvent implements EventInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public static function eventName(): string
     {
         $name = explode('\\', static::class);
 

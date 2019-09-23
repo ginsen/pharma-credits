@@ -6,9 +6,9 @@ namespace App\Domain\Common\WriteModel;
 
 interface WriteModelInterface
 {
-    public function queueToPersist($entity): void;
+    public function save($entity): void;
 
-    public function persist(): void;
+    public function update($entity): void;
 
-    public function clearQueue(): void;
+    public function delete($entity): void;
 }

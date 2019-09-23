@@ -26,8 +26,9 @@ class LogEventSubscriber implements DomainEventSubscriberInterface
 
     /**
      * @param EventInterface $event
+     * @param null $data
      */
-    public function handle(EventInterface $event): void
+    public function handle(EventInterface $event, $data = null): void
     {
         $this->logger->info($event->serialize());
     }

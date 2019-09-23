@@ -8,5 +8,5 @@ interface EventInterface
 {
     public function serialize(): string;
 
-    public function getName(): string;
+    public static function eventName(): string;
 }

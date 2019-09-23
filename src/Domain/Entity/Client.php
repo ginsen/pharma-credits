@@ -45,8 +45,6 @@ class Client extends AggregateRoot
         $instance->uuid = $uuid;
         $instance->setName($name);
 
-        $instance->queueEvent(new ClientWasCreated($instance));
-
         return $instance;
     }
 

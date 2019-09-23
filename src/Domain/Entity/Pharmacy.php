@@ -46,8 +46,6 @@ class Pharmacy extends AggregateRoot
         $instance->uuid = $uuid;
         $instance->setName($name);
 
-        $instance->queueEvent(new PharmacyWasCreated($instance));
-
         return $instance;
     }
 
