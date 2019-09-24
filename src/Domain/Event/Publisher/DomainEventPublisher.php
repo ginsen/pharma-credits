@@ -6,6 +6,7 @@ namespace App\Domain\Event\Publisher;
 
 use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
+use BadMethodCallException;
 
 /**
  * Class DomainEventPublisher
@@ -35,7 +36,7 @@ class DomainEventPublisher
     /**
      * DomainEventPublisher constructor.
      */
-    private function __construct()
+    protected function __construct()
     {
         $this->subscribers = [];
     }
@@ -43,13 +44,13 @@ class DomainEventPublisher
 
     public function __clone()
     {
-        throw new \BadMethodCallException('Clone is not supported');
+        throw new BadMethodCallException('Clone is not supported');
     }
 
 
     public function subscribe(DomainEventSubscriberInterface $subscriber): void
     {
-        $this->subscribers = $subscriber;
+        $this->subscribers[] = $subscriber;
     }
 
 

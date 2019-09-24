@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\AggregateRoot;
 
-use App\Domain\Event\Common\EventCollection;
 use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Publisher\DomainEventPublisher;
 

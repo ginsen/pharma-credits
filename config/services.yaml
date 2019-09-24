@@ -26,10 +26,10 @@ services:
             tags:
                 - { name: tactician.handler, typehints: true, bus: query }
 
-        App\Infrastructure\EventSubscriber\InitializeSubscribers:
+        App\Infrastructure\EventSubscriber\LoaderEventSubscribers:
             calls:
-                - { method: loadSubscriber, arguments: ['@App\Infrastructure\EventSubscriber\LogEventSubscriber'] }
-                - { method: loadSubscriber, arguments: ['@App\Infrastructure\EventSubscriber\PersistEntityByEventSubscriber'] }
+                - { method: load, arguments: ['@App\Infrastructure\EventSubscriber\LogEventSubscriber'] }
+                - { method: load, arguments: ['@App\Infrastructure\EventSubscriber\PersistEntityByEventSubscriber'] }
 
 
     # makes classes in src/ available to be used as services

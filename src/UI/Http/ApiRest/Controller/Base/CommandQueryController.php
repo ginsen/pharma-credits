@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\ApiRest\Controller\Base;
 
+use App\Infrastructure\EventSubscriber\LoaderEventSubscribers;
 use League\Tactician\CommandBus;
 
 class CommandQueryController
@@ -17,13 +18,16 @@ class CommandQueryController
 
     /**
      * CommandQueryController constructor.
-     * @param CommandBus $commandBus
-     * @param CommandBus $queryBus
+     * @param CommandBus             $commandBus
+     * @param CommandBus             $queryBus
+     * @param LoaderEventSubscribers $loaderSubscribers
      */
-    public function __construct(CommandBus $commandBus, CommandBus $queryBus)
+    public function __construct(CommandBus $commandBus, CommandBus $queryBus, LoaderEventSubscribers $loaderSubscribers)
     {
         $this->commandBus = $commandBus;
         $this->queryBus   = $queryBus;
+
+        unset($loaderSubscribers);
     }
 
 
