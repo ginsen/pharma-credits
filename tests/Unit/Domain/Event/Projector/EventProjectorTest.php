@@ -24,6 +24,20 @@ class EventProjectorTest extends TestCase
     }
 
 
+    /**
+     * @test
+     */
+    public function it_should_no_call_apply_method_when_not_exist_method(): void
+    {
+        $event     = $this->makeOtherEvent();
+        $projector = $this->makeProjector();
+
+        $projector->handle($event);
+
+        self::assertSame($projector->applyCalled, 0);
+    }
+
+
     private function makeProjector()
     {
         return new class() extends EventProjector {
@@ -48,6 +62,22 @@ class EventProjectorTest extends TestCase
             public static function eventName(): string
             {
                 return 'EventWasCalled';
+            }
+        };
+    }
+
+
+    private function makeOtherEvent(): EventInterface
+    {
+        return new class() implements EventInterface {
+            public function serialize(): string
+            {
+                return '';
+            }
+
+            public static function eventName(): string
+            {
+                return 'OtherEvent';
             }
         };
     }
