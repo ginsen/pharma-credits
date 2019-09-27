@@ -13,7 +13,7 @@ class DomainEventPublisher
     /** @var self|null */
     private static $instance = null;
 
-    /** @var array */
+    /** @var DomainEventSubscriberInterface[] */
     private $subscribers;
 
 
