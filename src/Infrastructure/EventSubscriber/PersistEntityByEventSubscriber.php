@@ -7,9 +7,10 @@ namespace App\Infrastructure\EventSubscriber;
 use App\Domain\Common\WriteModel\WriteModelInterface;
 use App\Domain\Entity\AggregateRoot\EntityInterface;
 use App\Domain\Event\Common\EventInterface;
+use App\Domain\Event\Projector\EventProjector;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 
-class PersistEntityByEventSubscriber implements DomainEventSubscriberInterface
+class PersistEntityByEventSubscriber extends EventProjector implements DomainEventSubscriberInterface
 {
     /** @var WriteModelInterface */
     private $writeModel;
@@ -21,10 +22,19 @@ class PersistEntityByEventSubscriber implements DomainEventSubscriberInterface
     }
 
 
-    public function handle(EventInterface $event, $data = null): void
+    protected function applyPointWasCreated(EventInterface $event, $data = null): void
     {
         if ($data instanceof EntityInterface) {
             $this->writeModel->save($data);
+            $this->notifyOutOfBoundedContext($event);
+        }
+    }
+
+
+    protected function applyPointWasRedeemed(EventInterface $event, $data = null): void
+    {
+        if ($data instanceof EntityInterface) {
+            $this->writeModel->update($data);
             $this->notifyOutOfBoundedContext($event);
         }
     }
