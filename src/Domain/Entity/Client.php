@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use App\Domain\Entity\AggregateRoot\AggregateRoot;
-use App\Domain\Event\Event\ClientWasCreated;
 use App\Domain\Exception\ClientException;
 use App\Domain\Exception\PointException;
 use App\Domain\ValueObj\ClientName;
@@ -25,9 +24,6 @@ class Client extends AggregateRoot
     private $points;
 
 
-    /**
-     * Client constructor.
-     */
     private function __construct()
     {
         $this->points = new ArrayCollection();

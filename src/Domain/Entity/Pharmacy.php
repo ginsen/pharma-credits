@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use App\Domain\Entity\AggregateRoot\AggregateRoot;
-use App\Domain\Event\Event\PharmacyWasCreated;
 use App\Domain\ValueObj\PharmacyName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
@@ -25,9 +24,6 @@ class Pharmacy extends AggregateRoot
     private $redeemedPoints;
 
 
-    /**
-     * Pharmacy constructor.
-     */
     private function __construct()
     {
         $this->awardedPoints  = new ArrayCollection();

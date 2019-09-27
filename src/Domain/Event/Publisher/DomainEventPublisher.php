@@ -8,9 +8,6 @@ use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
 use BadMethodCallException;
 
-/**
- * Class DomainEventPublisher
- */
 class DomainEventPublisher
 {
     /** @var self|null */
@@ -20,9 +17,6 @@ class DomainEventPublisher
     private $subscribers;
 
 
-    /**
-     * @return DomainEventPublisher
-     */
     public static function instance(): self
     {
         if (null === static::$instance) {
@@ -33,9 +27,6 @@ class DomainEventPublisher
     }
 
 
-    /**
-     * DomainEventPublisher constructor.
-     */
     protected function __construct()
     {
         $this->subscribers = [];
