@@ -51,3 +51,7 @@ dc: ## Launch Deptrac to check relations and dependencies between DDD layers
 
 test: phpunit.xml.dist ## Launch all functionnal and unit tests
 	bin/phpunit --stop-on-failure --testdox
+
+scanner: ## Launch sonar-scanner after phpunit
+	bin/phpunit
+	sonar-scanner

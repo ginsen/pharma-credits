@@ -11,11 +11,19 @@ TextMate2
 ###< IDE ###
 
 ###> Docker config ###
+/docker/bash/ssh/*
+!/docker/bash/ssh/.gitignore
 /docker/nginx/log/access.log
 /docker/nginx/log/error.log
 ###< Docker config ###
 
+###> Sonar Scanner ###
+/.scannerwork/
+sonar-project.properties
+###< Sonar Scanner ###
+
 ###> symfony/framework-bundle ###
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local

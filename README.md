@@ -15,6 +15,24 @@ $ git clone https://github.com/ginsen/pharma-credits.git
 $ cd pharma-credits
 ```
 
+## Variables de entorno
+Copia y personaliza las variables de entorno.
+
+```bash
+$ cp .env.dist .env
+```
+
+Cambia los parametros que hay dentro del archivo `.env`, concretamente los de la seccion **Docker environment** por tus
+valores personalizados.
+
+## Añadir usuario SSH (Opcional)
+Copia tu claves SSH para poder acceder con tu propio usuario dentro de contendor de docker.
+
+```bash
+$ cp ~/.ssh/id_rsa.pub ./docker/bash/ssh/
+$ cp ~/.ssh/id_rsa ./docker/bash/ssh/
+```
+
 ## Construir contenedor de Docker
 
 ```bash

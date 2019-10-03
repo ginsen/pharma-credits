@@ -1,9 +1,26 @@
 FROM php:7.2-fpm
 
 ARG TIMEZONE
+ARG USER
+ARG USER_NAME
+ARG USER_EMAIL
+ARG USER_ID
+ARG XDEBUG_REMOTE_HOST
+ARG XDEBUG_REMOTE_PORT
 
 # Install APT basic packages
-RUN apt update && apt install -y curl git-all unzip gnupg bash-completion zlib1g-dev libicu-dev
+RUN apt update && apt install -y curl git-all git-flow unzip vim curl ccze gnupg bash-completion zlib1g-dev libicu-dev
+
+# Install APT repositories
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+# Install APT packages nodejs & yarn
+RUN apt-get update && apt-get install -y nodejs yarn npm
+
+# Sonar Scanner
+RUN npm i -g sonarqube-scanner
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
@@ -16,12 +33,40 @@ RUN docker-php-ext-install pdo_mysql bcmath intl
 RUN pecl install apcu-5.1.8
 RUN docker-php-ext-enable apcu
 
+# install xdebug
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+RUN echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_host=${XDEBUG_REMOTE_HOST}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_port=${XDEBUG_REMOTE_PORT}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
+# Create user
+RUN groupadd ${USER}
+RUN useradd -g ${USER} -u ${USER_ID} -d /home/${USER} -m -s /bin/bash ${USER}
+COPY docker/bash/ssh/id_rsa* /home/${USER}/.ssh/
+COPY docker/bash/.gitconfig /home/${USER}/
+COPY docker/bash/.bashrc /home/${USER}/
+COPY docker/bash/.bash_aliases /home/${USER}/
+
 RUN \
+    chown -R ${USER}:${USER} /home/${USER} && \
+    sed -i "s/EMAIL/${USER_EMAIL}/g" /home/${USER}/.gitconfig && \
+    sed -i "s/NAME/${USER_NAME}/g"  /home/${USER}/.gitconfig && \
+    chmod 600 /home/${USER}/.ssh/id_rsa && \
+    chmod 600 /home/${USER}/.ssh/id_rsa.pub && \
+    /bin/bash -c "eval '$(ssh-agent -s)'; ssh-add /home/${USER}/.ssh/id_rsa" && \
     mkdir /var/www/app && \
+    chown -R ${USER}:${USER} /var/www/app && \
     mkdir -p /var/log/nginx/ && \
     chmod -R 0777 /var/log/nginx
 
