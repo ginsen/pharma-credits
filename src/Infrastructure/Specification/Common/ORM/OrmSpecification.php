@@ -54,9 +54,9 @@ abstract class OrmSpecification implements SpecificationInterface
 
     protected function addParameters(SpecificationInterface $specification): void
     {
-        $types = $specification->getTypes();
+        $specTypes = $specification->getTypes();
         foreach ($specification->getParameters() as $key => $value) {
-            $this->setParameter($key, $value, $types[$key]);
+            $this->setParameter($key, $value, $specTypes[$key]);
         }
     }
 

@@ -69,15 +69,12 @@ class ExceptionSubscriber implements EventSubscriberInterface
         // Default status code is always 500
         $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
 
-        switch (true) {
-            case $exception instanceof HttpExceptionInterface:
-                $statusCode = $exception->getStatusCode();
+        if ($exception instanceof HttpExceptionInterface) {
+            $statusCode = $exception->getStatusCode();
+        }
 
-                break;
-            case $exception instanceof \InvalidArgumentException:
-                $statusCode = Response::HTTP_BAD_REQUEST;
-
-                break;
+        if ($exception instanceof \InvalidArgumentException) {
+            $statusCode = Response::HTTP_BAD_REQUEST;
         }
 
         return $statusCode;
