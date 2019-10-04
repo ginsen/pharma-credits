@@ -71,4 +71,20 @@ class AwardPointDatesQueryTest extends TestCase
         $command = new AwardPointDatesQuery($pharmacyUuid->toString(), $dateInit->toStr(), $dateEnd->toStr());
         self::assertInstanceOf(AwardedAt::class, $command->dateEnd);
     }
+
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function it_should_refactor_date_end_when_dont_has_hours()
+    {
+        $pharmacyUuid = Uuid::uuid4();
+        $dateInit     = AwardedAt::now();
+        $dateEnd      = (AwardedAt::now())->toDateTime()->format('Y-m-d');
+
+        $command = new AwardPointDatesQuery($pharmacyUuid->toString(), $dateInit->toStr(), $dateEnd);
+        self::assertInstanceOf(AwardedAt::class, $command->dateEnd);
+        self::assertRegExp('/T23:59:59/', $command->dateEnd->toStr());
+    }
 }
