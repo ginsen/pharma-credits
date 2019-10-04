@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Domain\ValueObj;
 
+use App\Domain\Exception\DateTimeException;
 use App\Domain\ValueObj\AwardedAt;
 use PHPUnit\Framework\TestCase;
 
@@ -17,5 +18,17 @@ class AwardedAtTest extends TestCase
         $time = AwardedAt::now();
         self::assertInstanceOf(AwardedAt::class, $time);
         self::assertInstanceOf(\DateTimeImmutable::class, $time->toDateTime());
+        self::assertIsString((string) $time);
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_should_exception_when_receive_bad_format(): void
+    {
+        $this->expectException(DateTimeException::class);
+
+        AwardedAt::fromStr('foobar');
     }
 }

@@ -42,7 +42,7 @@ trait TraitDateTime
         try {
             $instance->dateTime = new \DateTimeImmutable($time);
         } catch (\Exception $e) {
-            throw new DateTimeException($e);
+            throw new DateTimeException($e->getMessage());
         }
 
         return $instance;

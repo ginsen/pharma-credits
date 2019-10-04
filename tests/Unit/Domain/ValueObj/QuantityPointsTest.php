@@ -20,6 +20,7 @@ class QuantityPointsTest extends TestCase
 
         self::assertInstanceOf(QuantityPoints::class, $quantity);
         self::assertSame(7, $quantity->toNumber());
+        self::assertSame('7', (string) $quantity);
     }
 
 
