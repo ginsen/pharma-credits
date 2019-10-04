@@ -29,14 +29,13 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
 
     /**
      * @test
-     *
      */
     public function it_should_throw_exception_when_clone_it()
     {
         $this->expectException(\BadMethodCallException::class);
 
         $eventPublisher = DomainEventPublisher::instance();
-        $clone = clone $eventPublisher;
+        $clone          = clone $eventPublisher;
         unset($clone);
     }
 
