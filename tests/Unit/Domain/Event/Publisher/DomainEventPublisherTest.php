@@ -27,6 +27,18 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
         self::assertTrue($this->handleSubscriber);
     }
 
+    /**
+     * @test
+     *
+     */
+    public function it_should_throw_exception_when_clone_it()
+    {
+        $this->expectException(\BadMethodCallException::class);
+
+        $eventPublisher = DomainEventPublisher::instance();
+        $clone = clone $eventPublisher;
+        unset($clone);
+    }
 
     public function handle(EventInterface $event, $data = null): void
     {
