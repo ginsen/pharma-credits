@@ -46,7 +46,3 @@ sonar-project.properties
 ###> sensiolabs-de/deptrac-shim ###
 /.deptrac.cache
 ###< sensiolabs-de/deptrac-shim ###
-
-###> symfony/web-server-bundle ###
-/.web-server-pid
-###< symfony/web-server-bundle ###

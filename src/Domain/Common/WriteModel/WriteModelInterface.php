@@ -4,11 +4,25 @@ declare(strict_types=1);
 
 namespace App\Domain\Common\WriteModel;
 
+use Throwable;
+
 interface WriteModelInterface
 {
-    public function save($entity): void;
+    /**
+     * @param object $entity
+     * @throws Throwable
+     */
+    public function save(object $entity): void;
 
-    public function update($entity): void;
+    /**
+     * @param object $entity
+     * @throws Throwable
+     */
+    public function update(object $entity): void;
 
-    public function delete($entity): void;
+    /**
+     * @param object $entity
+     * @throws Throwable
+     */
+    public function delete(object $entity): void;
 }
