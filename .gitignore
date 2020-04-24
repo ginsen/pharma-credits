@@ -30,6 +30,8 @@ sonar-project.properties
 /public/bundles/
 /var/
 /vendor/
+/bin/*
+!/bin/console
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
