@@ -3,19 +3,21 @@ Prueba de concepto
 
 ## Requerimientos
 
-- [x] Lenvatar servicios externos de docker: MySQL y opcionalemte SonarQube y Adminer con [ginsen/docker-services](https://github.com/ginsen/docker-services)
+- [x] Lenvatar servicios externos de docker: MySQL y opcionalmente SonarQube y Adminer con [ginsen/docker-services](https://github.com/ginsen/docker-services)
 - [x] docker-compose
 - [x] git
 
 ## Instalación de Servicios externos
 
-Descargar aplicacion de servicios esternos, y seguir sus instrucciones:
+Descargar aplicación de servicios externos, y seguir sus instrucciones:
 
 ```bash
 $ git clone https://github.com/ginsen/docker-services.git
 ```
 
 Levantar el servicio de MySQL y opcionalmente Adminer y SonarQube (requiere levantar también PostGreSQL).
+
+> Para las pruebas se ha usado un servidor doquerizado llamado **local_mysql**, sobre una net de docker_compose, ver .env y docker_compose.yml
 
 ## Instalación
 Descarga el proyecto de **ginsen/pharma-credits**.
@@ -86,13 +88,10 @@ $ make test
 Applicación | Url
 ----------- | ---
 API Rest    | http://localhost:8080/api/doc
-Adminer     | http://localhost:8081/?server=mysql&username=root&db=pharma_points
-SonarQube   | http://localhost:8183/projects
-
 
 Adminer es un visor de base de datos más ligero que phpmyadmin, Para validarse usar:
 
-- Servidor: mysql
+- Servidor: local_mysql
 - Usuario: root
 - Contraseña: root
 - Base de datos: pharma_points
