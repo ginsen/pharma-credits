@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Symfony\EventSubscriber;
 
+use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Throwable;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    /** @var string */
-    private $environment;
+    private string $environment;
 
 
     public static function getSubscribedEvents(): array
@@ -25,21 +26,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
 
-    /**
-     * ExceptionSubscriber constructor.
-     */
+
     public function __construct()
     {
         $this->environment = (string) getenv('APP_ENV') ?? 'dev';
     }
 
 
-    /**
-     * @param ExceptionEvent $event
-     */
     public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/vnd.api+json');
@@ -50,21 +46,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
 
-    /**
-     * @param  \Exception $exception
-     * @return int
-     */
-    private function getStatusCode(\Exception $exception): int
+    private function getStatusCode(Throwable $exception): int
     {
         return $this->determineStatusCode($exception);
     }
 
 
-    /**
-     * @param  \Exception $exception
-     * @return int
-     */
-    private function determineStatusCode(\Exception $exception): int
+    private function determineStatusCode(Throwable $exception): int
     {
         // Default status code is always 500
         $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
@@ -73,7 +61,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $statusCode = $exception->getStatusCode();
         }
 
-        if ($exception instanceof \InvalidArgumentException) {
+        if ($exception instanceof InvalidArgumentException) {
             $statusCode = Response::HTTP_BAD_REQUEST;
         }
 
@@ -81,17 +69,12 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
 
-    /**
-     * @param  \Exception $exception
-     * @param  Response   $response
-     * @return array
-     */
-    private function getErrorMessage(\Exception $exception, Response $response): array
+    private function getErrorMessage(Throwable $exception, Response $response): array
     {
         $error = [
-            'errors'=> [
+            'errors' => [
                 'title'     => str_replace('\\', '.', \get_class($exception)),
-                'detail'    => $this->getExceptionMessage($exception),
+                'detail'    => $exception->getMessage(),
                 'code'      => $exception->getCode(),
                 'status'    => $response->getStatusCode(),
             ],
@@ -113,15 +96,5 @@ class ExceptionSubscriber implements EventSubscriberInterface
         }
 
         return $error;
-    }
-
-
-    /**
-     * @param  \Exception $exception
-     * @return string
-     */
-    private function getExceptionMessage(\Exception $exception): string
-    {
-        return $exception->getMessage();
     }
 }

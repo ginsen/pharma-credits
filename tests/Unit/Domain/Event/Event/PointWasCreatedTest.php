@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\Event\Event;
+namespace App\Tests\Unit\Domain\Event\Event;
 
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
@@ -17,15 +17,10 @@ use Ramsey\Uuid\Uuid;
 
 class PointWasCreatedTest extends TestCase
 {
-    /** @var Point */
-    protected static $point;
+    protected static ?Point $point;
 
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception|\Assert\AssertionFailedException
-     */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $client    = self::getClient();
         $pharmacy  = self::getPharmacy();
@@ -38,7 +33,7 @@ class PointWasCreatedTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::$point = null;
     }
@@ -64,20 +59,12 @@ class PointWasCreatedTest extends TestCase
     }
 
 
-    /**
-     * @throws \Exception|\Assert\AssertionFailedException
-     * @return Client
-     */
     protected static function getClient(): Client
     {
         return Client::create(Uuid::uuid4(), ClientName::fromStr('client'));
     }
 
 
-    /**
-     * @throws \Exception|\Assert\AssertionFailedException
-     * @return Pharmacy
-     */
     protected static function getPharmacy(): Pharmacy
     {
         return Pharmacy::create(Uuid::uuid4(), PharmacyName::fromStr('test'));

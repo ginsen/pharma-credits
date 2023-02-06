@@ -9,12 +9,17 @@ use Ramsey\Uuid\UuidInterface;
 
 class ClientBalanceQuery
 {
-    /** @var UuidInterface */
-    public $clientUuid;
+    private UuidInterface $clientUuid;
 
 
     public function __construct(string $uuid)
     {
         $this->clientUuid = Uuid::fromString($uuid);
+    }
+
+
+    public function clientUuid(): UuidInterface
+    {
+        return $this->clientUuid;
     }
 }

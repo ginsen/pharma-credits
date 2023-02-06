@@ -1,15 +1,13 @@
-## —— Make file ————————————————————————————————————————————————————————————————
+## —— Pharma Credits ———————————————————————————————————————————————————————————
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
-## —— Composer —————————————————————————————————————————————————————————————————
 install: composer.lock ## Install vendors according to the current composer.lock file
 	composer install
 
 update: composer.json ## Update vendors according to the current composer.json file
 	composer update
 
-## —— Symfony ——————————————————————————————————————————————————————————————————
 sf: ## List Symfony commands
 	bin/console
 
@@ -31,8 +29,7 @@ stop: ## Stop the local Symfony web server
 purge: ## Purge cache and logs
 	rm -rf var/cache/* var/logs/*
 
-## —— Project ——————————————————————————————————————————————————————————————————
-load-fixtures: ## Build the db, control the schema validity, load fixtures and check the migration status
+load-fixtures: ## Build the db, validate schema db, load fixtures and check migration
 	bin/console doctrine:database:create --if-not-exists
 	bin/console doctrine:schema:drop --force
 	bin/console doctrine:schema:create
@@ -41,13 +38,13 @@ load-fixtures: ## Build the db, control the schema validity, load fixtures and c
 	bin/console doctrine:fixtures:load -n
 
 cs: ## Launch check style and static analysis
-	vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix
+	bin/php-cs-fixer --no-interaction --dry-run --diff -v fix
 
 cs-fix: ## Executes cs fixer
-	vendor/bin/php-cs-fixer --no-interaction --diff -v fix
+	bin/php-cs-fixer --no-interaction --diff -v fix
 
 dc: ## Launch Deptrac to check relations and dependencies between DDD layers
-	vendor/bin/deptrac
+	bin/deptrac
 
 test: phpunit.xml.dist ## Launch all functionnal and unit tests
 	bin/phpunit --stop-on-failure --testdox

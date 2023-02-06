@@ -1,0 +1,31 @@
+framework:
+    messenger:
+        # reset services after consuming messages
+        reset_on_message: true
+
+        default_bus: query.bus
+        buses:
+            query.bus:
+                middleware:
+                    - validation
+
+            command.bus:
+                middleware:
+                    - validation
+                    # wraps all handlers in a single Doctrine transaction
+                    # handlers do not need to call flush() and an error
+                    # in any handler will cause a rollback
+                    - doctrine_transaction: [ 'writer' ]
+
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+
+        routing:
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async

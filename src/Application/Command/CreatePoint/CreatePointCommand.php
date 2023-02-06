@@ -6,37 +6,46 @@ namespace App\Application\Command\CreatePoint;
 
 use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\QuantityPoints;
-use Assert\AssertionFailedException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 class CreatePointCommand
 {
-    /** @var UuidInterface */
-    public $clientUuid;
-
-    /** @var UuidInterface */
-    public $pharmacyUuid;
-
-    /** @var QuantityPoints */
-    public $quantity;
-
-    /** @var AwardedAt */
-    public $awardedAt;
+    private UuidInterface $clientUuid;
+    private UuidInterface $pharmacyUuid;
+    private QuantityPoints $quantity;
+    private AwardedAt $awardedAt;
 
 
-    /**
-     * CreatePointsCommand constructor.
-     * @param string $clientUuid
-     * @param string $pharmacyUuid
-     * @param int    $points
-     * @throws AssertionFailedException
-     */
     public function __construct(string $clientUuid, string $pharmacyUuid, int $points)
     {
         $this->clientUuid   = Uuid::fromString($clientUuid);
         $this->pharmacyUuid = Uuid::fromString($pharmacyUuid);
         $this->quantity     = QuantityPoints::fromInt($points);
         $this->awardedAt    = AwardedAt::now();
+    }
+
+
+    public function clientUuid(): UuidInterface
+    {
+        return $this->clientUuid;
+    }
+
+
+    public function pharmacyUuid(): UuidInterface
+    {
+        return $this->pharmacyUuid;
+    }
+
+
+    public function quantity(): QuantityPoints
+    {
+        return $this->quantity;
+    }
+
+
+    public function awardedAt(): AwardedAt
+    {
+        return $this->awardedAt;
     }
 }

@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
 
     <entity name="App\Domain\Entity\Pharmacy" table="pharmacy">
 
         <id name="uuid" type="uuid" column="uuid"/>
-
-        <field name="name" type="pharmacyName" length="80" column="name" nullable="false"/>
+        <field name="name" type="pharmacyName" length="80" column="name" />
 
         <one-to-many field="awardedPoints" target-entity="App\Domain\Entity\Point" mapped-by="pharmacyAwarding">
             <cascade>
                 <cascade-persist/>
             </cascade>
             <order-by>
-                <order-by-field name="awardedAt" direction="ASC" />
+                <order-by-field name="awardedAt" />
             </order-by>
         </one-to-many>
 
@@ -22,7 +20,7 @@
                 <cascade-persist/>
             </cascade>
             <order-by>
-                <order-by-field name="redeemedAt" direction="ASC" />
+                <order-by-field name="redeemedAt" />
             </order-by>
         </one-to-many>
 

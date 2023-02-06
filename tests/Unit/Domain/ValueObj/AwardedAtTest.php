@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\ValueObj;
+namespace App\Tests\Unit\Domain\ValueObj;
 
 use App\Domain\Exception\DateTimeException;
 use App\Domain\ValueObj\AwardedAt;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class AwardedAtTest extends TestCase
@@ -17,7 +18,7 @@ class AwardedAtTest extends TestCase
     {
         $time = AwardedAt::now();
         self::assertInstanceOf(AwardedAt::class, $time);
-        self::assertInstanceOf(\DateTimeImmutable::class, $time->toDateTime());
+        self::assertInstanceOf(DateTimeImmutable::class, $time->toDateTime());
         self::assertIsString((string) $time);
     }
 

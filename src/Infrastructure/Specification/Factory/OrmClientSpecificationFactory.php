@@ -13,14 +13,9 @@ use Ramsey\Uuid\UuidInterface;
 
 class OrmClientSpecificationFactory implements ClientSpecificationFactoryInterface
 {
-    /** @var Expr */
-    private $expr;
+    private Expr $expr;
 
 
-    /**
-     * OrmClientSpecificationFactory constructor.
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->expr = $entityManager->getExpressionBuilder();

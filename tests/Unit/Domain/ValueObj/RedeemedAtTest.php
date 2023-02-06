@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\ValueObj;
+namespace App\Tests\Unit\Domain\ValueObj;
 
 use App\Domain\ValueObj\RedeemedAt;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class RedeemedAtTest extends TestCase
@@ -16,6 +17,6 @@ class RedeemedAtTest extends TestCase
     {
         $time = RedeemedAt::now();
         self::assertInstanceOf(RedeemedAt::class, $time);
-        self::assertInstanceOf(\DateTimeImmutable::class, $time->toDateTime());
+        self::assertInstanceOf(DateTimeImmutable::class, $time->toDateTime());
     }
 }

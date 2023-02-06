@@ -14,32 +14,20 @@ use Ramsey\Uuid\UuidInterface;
 
 class Point extends AggregateRoot
 {
-    /** @var UuidInterface */
-    protected $uuid;
+    public const ALIAS          = 'po';
+    public const POINTS         = 'points';
+    public const AWARDED_POINTS = 'awarded_points';
+    public const FROM           = 'from';
+    public const TO             = 'to';
 
-    /** @var Client */
-    protected $client;
-
-    /** @var Pharmacy */
-    protected $pharmacyAwarding;
-
-    /** @var Pharmacy */
-    protected $pharmacyRedeeming;
-
-    /** @var AwardedAt */
-    protected $awardedAt;
-
-    /** @var RedeemedAt */
-    protected $redeemedAt;
+    protected UuidInterface $uuid;
+    protected Client $client;
+    protected Pharmacy $pharmacyAwarding;
+    protected Pharmacy $pharmacyRedeeming;
+    protected AwardedAt $awardedAt;
+    protected RedeemedAt $redeemedAt;
 
 
-    /**
-     * @param Client    $client
-     * @param Pharmacy  $pharmacy
-     * @param AwardedAt $time
-     * @throws \Exception
-     * @return Point
-     */
     public static function createAwardPoint(Client $client, Pharmacy $pharmacy, AwardedAt $time): self
     {
         $instance = new self();
@@ -66,19 +54,12 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * @return bool
-     */
     public function isAvailableForClient(): bool
     {
         return empty($this->pharmacyRedeeming);
     }
 
 
-    /**
-     * @param Client $client
-     * @return Point
-     */
     protected function setClient(Client $client): self
     {
         $client->addPoint($this);
@@ -88,10 +69,6 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * @param Pharmacy $pharmacy
-     * @return Point
-     */
     protected function setPharmacyAwarding(Pharmacy $pharmacy): self
     {
         $pharmacy->addAwardedPoint($this);
@@ -101,10 +78,6 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * @param Pharmacy $pharmacy
-     * @return Point
-     */
     protected function setPharmacyRedeeming(Pharmacy $pharmacy): self
     {
         $pharmacy->addRedeemedPoint($this);
@@ -114,10 +87,6 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * @param AwardedAt $awardedAt
-     * @return Point
-     */
     protected function setAwardedAt(AwardedAt $awardedAt): self
     {
         $this->awardedAt = $awardedAt;
@@ -126,10 +95,6 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * @param RedeemedAt $redeemedAt
-     * @return Point
-     */
     protected function setRedeemedAt(RedeemedAt $redeemedAt): self
     {
         $this->redeemedAt = $redeemedAt;
@@ -138,64 +103,43 @@ class Point extends AggregateRoot
     }
 
 
-    /**
-     * Point constructor.
-     */
-    protected function __construct()
-    {
-    }
-
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
+    public function uuid(): UuidInterface
     {
         return $this->uuid;
     }
 
 
-    /**
-     * @return Client
-     */
-    public function getClient(): Client
+    public function client(): Client
     {
         return $this->client;
     }
 
 
-    /**
-     * @return Pharmacy
-     */
-    public function getPharmacyAwarding(): Pharmacy
+    public function pharmacyAwarding(): Pharmacy
     {
         return $this->pharmacyAwarding;
     }
 
 
-    /**
-     * @return Pharmacy
-     */
-    public function getPharmacyRedeeming(): Pharmacy
+    public function pharmacyRedeeming(): Pharmacy
     {
         return $this->pharmacyRedeeming;
     }
 
 
-    /**
-     * @return AwardedAt
-     */
-    public function getAwardedAt(): AwardedAt
+    public function awardedAt(): AwardedAt
     {
         return $this->awardedAt;
     }
 
 
-    /**
-     * @return RedeemedAt
-     */
-    public function getRedeemedAt(): RedeemedAt
+    public function redeemedAt(): RedeemedAt
     {
         return $this->redeemedAt;
+    }
+
+
+    protected function __construct()
+    {
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Query\AwardPointClient;
+namespace App\Tests\Unit\Application\Query\AwardPointClient;
 
 use App\Application\Query\AwardPointClient\AwardPointClientQuery;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +13,6 @@ class AwardPointClientQueryTest extends TestCase
 {
     /**
      * @test
-     * @throws \Exception
      */
     public function it_should_create_one_instance()
     {
@@ -28,7 +27,6 @@ class AwardPointClientQueryTest extends TestCase
 
     /**
      * @test
-     * @throws \Exception
      */
     public function it_should_return_client_uuid()
     {
@@ -36,13 +34,12 @@ class AwardPointClientQueryTest extends TestCase
         $pharmacyUuid = Uuid::uuid4();
 
         $command = new AwardPointClientQuery($clientUuid->toString(), $pharmacyUuid->toString());
-        self::assertInstanceOf(UuidInterface::class, $command->clientUuid);
+        self::assertInstanceOf(UuidInterface::class, $command->clientUuid());
     }
 
 
     /**
      * @test
-     * @throws \Exception
      */
     public function it_should_return_pharmacy_uuid()
     {
@@ -50,6 +47,6 @@ class AwardPointClientQueryTest extends TestCase
         $pharmacyUuid = Uuid::uuid4();
 
         $command = new AwardPointClientQuery($clientUuid->toString(), $pharmacyUuid->toString());
-        self::assertInstanceOf(UuidInterface::class, $command->pharmacyUuid);
+        self::assertInstanceOf(UuidInterface::class, $command->pharmacyUuid());
     }
 }

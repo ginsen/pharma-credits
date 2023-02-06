@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Specification\ORM;
 
-use App\Infrastructure\Repository\PointReadModel;
+use App\Domain\Entity\Point;
 use App\Infrastructure\Specification\Common\ORM\OrmSpecification;
 
 class PointWithoutRedeemed extends OrmSpecification
 {
-    public function getConditions()
+    public function getConditions(): string
     {
-        return $this->expr->isNull(PointReadModel::ENTITY_ALIAS . '.redeemedAt');
+        return $this->expr->isNull(Point::ALIAS . '.redeemedAt');
     }
 }

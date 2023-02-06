@@ -6,7 +6,7 @@ namespace App\Domain\ValueObj;
 
 final class AwardedAt
 {
-    const FORMAT = 'Y-m-d\TH:i:s.uP';
+    public const FORMAT = 'Y-m-d\TH:i:s.uP';
 
     use TraitDateTime;
 }

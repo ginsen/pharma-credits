@@ -7,21 +7,18 @@ namespace App\Domain\Entity;
 use App\Domain\Entity\AggregateRoot\AggregateRoot;
 use App\Domain\ValueObj\PharmacyName;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\UuidInterface;
 
 class Pharmacy extends AggregateRoot
 {
-    /** @var UuidInterface */
-    private $uuid;
+    public const ALIAS = 'pa';
+    public const NAME  = 'pharmacy';
 
-    /** @var PharmacyName */
-    private $name;
-
-    /** @var ArrayCollection */
-    private $awardedPoints;
-
-    /** @var ArrayCollection */
-    private $redeemedPoints;
+    private UuidInterface $uuid;
+    private PharmacyName $name;
+    private Collection $awardedPoints;
+    private Collection $redeemedPoints;
 
 
     private function __construct()
@@ -31,48 +28,25 @@ class Pharmacy extends AggregateRoot
     }
 
 
-    /**
-     * @param UuidInterface $uuid
-     * @param PharmacyName  $name
-     * @return self
-     */
     public static function create(UuidInterface $uuid, PharmacyName $name): self
     {
         $instance       = new self();
         $instance->uuid = $uuid;
-        $instance->setName($name);
+        $instance->name = $name;
 
         return $instance;
     }
 
 
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
+    public function uuid(): UuidInterface
     {
         return $this->uuid;
     }
 
 
-    /**
-     * @return PharmacyName
-     */
-    public function getName(): PharmacyName
+    public function name(): PharmacyName
     {
         return $this->name;
-    }
-
-
-    /**
-     * @param PharmacyName $name
-     * @return self
-     */
-    protected function setName(PharmacyName $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
 
@@ -89,11 +63,11 @@ class Pharmacy extends AggregateRoot
 
 
     /**
-     * @return ArrayCollection|Point[]
+     * @return Point[]
      */
-    public function getAwardedPoints(): ArrayCollection
+    public function awardedPoints(): array
     {
-        return $this->awardedPoints;
+        return $this->awardedPoints->toArray();
     }
 
 
@@ -110,10 +84,10 @@ class Pharmacy extends AggregateRoot
 
 
     /**
-     * @return ArrayCollection|Point[]
+     * @return Point[]
      */
-    public function getRedeemedPoints(): ArrayCollection
+    public function redeemedPoints(): array
     {
-        return $this->redeemedPoints;
+        return $this->redeemedPoints->toArray();
     }
 }

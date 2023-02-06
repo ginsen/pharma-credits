@@ -6,9 +6,11 @@ namespace App\UI\Http\ApiRest\Controller\Client;
 
 use App\Application\Command\CreatePoint\CreatePointCommand;
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
+use App\Domain\Entity\Client;
+use App\Domain\Entity\Pharmacy;
+use App\Domain\Entity\Point;
 use App\UI\Http\ApiRest\Controller\Base\CommandQueryController;
-use Assert\AssertionFailedException;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,56 +22,63 @@ class IncrementController extends CommandQueryController
      * @Route("/cliente/puntos/incrementar", methods={"POST"},
      *     name="api_client_points_increment",
      *     requirements={
-     *      "cliente": "\w+",
-     *      "farmacia": "\w+",
-     *      "puntos": "\d+"
+     *      "client": "\w+",
+     *      "pharmacy": "\w+",
+     *      "points": "\d+"
      *     }
      * )
+     * @OA\Tag(name="Cliente")
      *
-     * @SWG\Tag(name="Cliente")
-     *
-     * @SWG\Parameter(
-     *     name="datos requeridos",
-     *     type="object",
-     *     in="body",
-     *     description="cliente: Identificador del cliente<br>farmacia: Identificador de la farmacia<br>puntos: Cantidad de puntos a incrementar",
-     *     schema=@SWG\Schema(type="object",
-     *         @SWG\Property(property="cliente", type="string", description="Identificador del cliente"),
-     *         @SWG\Property(property="farmacia", type="string", description="Identificador de la farmacia"),
-     *         @SWG\Property(property="puntos", type="integer", description="Cantidad de puntos a incrementar")
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             required={"client", "pharmacy", "points"},
+     *             @OA\Property(
+     *                 property="client",
+     *                 type="string",
+     *                 description="Identificador del cliente"
+     *             ),
+     *             @OA\Property(
+     *                 property="pharmacy",
+     *                 type="string",
+     *                 description="Identificador de la farmacia"
+     *             ),
+     *             @OA\Property(
+     *                 property="points",
+     *                 type="integer",
+     *                 description="Cantidad de puntos a incrementar"
+     *             )
+     *         )
      *     )
      * )
      *
-     * @SWG\Response(
-     *     response=202,
+     * @OA\Response(
+     *     response=201,
      *     description="Puntos de descuento incrementados con éxito"
      * )
-     *
-     * @SWG\Response(
+     * @OA\Response(
      *     response=400,
      *     description="Fallo de petición"
      * )
-     *
-     * @param Request $request
-     * @throws AssertionFailedException
-     * @return JsonResponse
      */
     public function __invoke(Request $request): JsonResponse
     {
         $params = json_decode($request->getContent(), true);
 
         $command = new CreatePointCommand(
-            $params['cliente'],
-            $params['farmacia'],
-            (int) $params['puntos']
+            $params[Client::NAME],
+            $params[Pharmacy::NAME],
+            (int) $params[Point::POINTS]
         );
 
-        $this->handleCommand($command);
+        $this->commandHandler($command);
 
-        $query = new ClientBalanceQuery($params['cliente']);
+        $query = new ClientBalanceQuery($params[Client::NAME]);
+        $data  = $this->queryHandler($query);
 
-        return JsonResponse::create([
-            'saldo' => $this->handleQuery($query),
+        return new JsonResponse([
+            Client::BALANCE => $data,
         ], Response::HTTP_ACCEPTED);
     }
 }

@@ -15,10 +15,10 @@
         </many-to-one>
 
         <many-to-one field="pharmacyRedeeming" target-entity="App\Domain\Entity\Pharmacy" inversed-by="redeemedPoints">
-            <join-column name="pharmacy_redeeming_uuid" nullable="true" referenced-column-name="uuid" />
+            <join-column name="pharmacy_redeeming_uuid" referenced-column-name="uuid" />
         </many-to-one>
 
-        <field name="awardedAt" type="awardedAt" column="awarded_at" nullable="false">
+        <field name="awardedAt" type="awardedAt" column="awarded_at">
             <gedmo:timestampable on="create"/>
         </field>
 

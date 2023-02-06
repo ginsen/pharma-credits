@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\Event\Projector;
+namespace App\Tests\Unit\Domain\Event\Projector;
 
 use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Projector\EventProjector;
@@ -38,10 +38,10 @@ class EventProjectorTest extends TestCase
     }
 
 
-    private function makeProjector()
+    private function makeProjector(): EventProjector
     {
         return new class() extends EventProjector {
-            public $applyCalled = 0;
+            public int $applyCalled = 0;
 
             public function applyEventWasCalled(EventInterface $event, $data = null): void
             {

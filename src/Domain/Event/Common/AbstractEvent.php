@@ -8,34 +8,19 @@ use App\Domain\ValueObj\CreatedAt;
 
 abstract class AbstractEvent implements EventInterface
 {
-    /** @var CreatedAt */
-    public $occurredOn;
+    public CreatedAt $occurredOn;
 
 
-    /**
-     * AbstractEvent constructor.
-     */
     public function __construct()
     {
         $this->occurredOn = CreatedAt::now();
     }
 
-
-    /**
-     * @return string
-     */
     abstract protected function index(): string;
 
-
-    /**
-     * @return string[]
-     */
     abstract protected function payload(): array;
 
 
-    /**
-     * @return string
-     */
     public function serialize(): string
     {
         $data = [
@@ -49,9 +34,6 @@ abstract class AbstractEvent implements EventInterface
     }
 
 
-    /**
-     * @return string
-     */
     public static function eventName(): string
     {
         $name = explode('\\', static::class);

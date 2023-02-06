@@ -10,11 +10,10 @@ use BadMethodCallException;
 
 class DomainEventPublisher
 {
-    /** @var self|null */
-    private static $instance = null;
+    private static ?DomainEventPublisher $instance = null;
 
     /** @var DomainEventSubscriberInterface[] */
-    private $subscribers;
+    private array $subscribers;
 
 
     public static function instance(): self
@@ -45,7 +44,7 @@ class DomainEventPublisher
     }
 
 
-    public function publish(EventInterface $event, $data = null)
+    public function publish(EventInterface $event, $data = null): void
     {
         foreach ($this->subscribers as $subscriber) {
             $subscriber->handle($event, $data);

@@ -6,7 +6,7 @@ namespace App\Domain\ValueObj;
 
 final class ClientName
 {
-    const MAX_LENGTH = 60;
+    public const MAX_LENGTH = 60;
 
     use TraitName;
 }

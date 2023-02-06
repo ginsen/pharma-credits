@@ -6,13 +6,14 @@ namespace App\Infrastructure\Doctrine\Type;
 
 use App\Domain\Exception\DateTimeException;
 use App\Domain\ValueObj\AwardedAt;
+use DateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
 
 class AwardedAtType extends DateTimeImmutableType
 {
-    const NAME = 'awardedAt';
+    public const NAME = 'awardedAt';
 
 
     /**
@@ -24,46 +25,31 @@ class AwardedAtType extends DateTimeImmutableType
     }
 
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return 'DateTime';
     }
 
 
-    /**
-     * {@inheritdoc}
-     * @throws ConversionException
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
-            return $value;
+            return null;
         }
 
         if ($value instanceof AwardedAt) {
             return $value->toDateTime()->format($platform->getDateTimeFormatString());
         }
 
-        if ($value instanceof \DateTimeImmutable) {
+        if ($value instanceof DateTimeImmutable) {
             return $value->format($platform->getDateTimeFormatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', AwardedAt::class]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', AwardedAt::class]);
     }
 
 
-    /**
-     * {@inheritdoc}
-     * @throws ConversionException
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?AwardedAt
     {
         if (null === $value || $value instanceof AwardedAt) {
             return $value;
@@ -71,12 +57,8 @@ class AwardedAtType extends DateTimeImmutableType
 
         try {
             $dateTime = AwardedAt::fromStr($value);
-        } catch (DateTimeException $e) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeFormatString()
-            );
+        } catch (DateTimeException) {
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeFormatString());
         }
 
         return $dateTime;

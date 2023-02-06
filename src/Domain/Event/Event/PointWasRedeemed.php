@@ -13,52 +13,35 @@ use Ramsey\Uuid\UuidInterface;
 
 class PointWasRedeemed extends AbstractEvent
 {
-    /** @var UuidInterface */
-    public $uuid;
-
-    /** @var Client */
-    public $client;
-
-    /** @var Pharmacy */
-    public $pharmacy;
-
-    /** @var RedeemedAt */
-    public $redeemedAt;
+    public UuidInterface $uuid;
+    public Client $client;
+    public Pharmacy $pharmacy;
+    public RedeemedAt $redeemedAt;
 
 
-    /**
-     * PointWasRedeemed constructor.
-     * @param Point $point
-     */
     public function __construct(Point $point)
     {
         parent::__construct();
 
-        $this->uuid       = $point->getUuid();
-        $this->client     = $point->getClient();
-        $this->pharmacy   = $point->getPharmacyRedeeming();
-        $this->redeemedAt = $point->getRedeemedAt();
+        $this->uuid       = $point->uuid();
+        $this->client     = $point->client();
+        $this->pharmacy   = $point->pharmacyRedeeming();
+        $this->redeemedAt = $point->redeemedAt();
     }
 
 
-    /**
-     * {@inheritdoc}
-     */
     protected function index(): string
     {
         return $this->uuid->toString();
     }
 
 
-    /**
-     * {@inheritdoc}
-     */
     protected function payload(): array
     {
         return [
             'uuid'               => $this->uuid->toString(),
-            'client'             => $this->client->getUuid()->toString(),
-            'pharmacy_redeeming' => $this->pharmacy->getUuid()->toString(),
+            'client'             => $this->client->uuid()->toString(),
+            'pharmacy_redeeming' => $this->pharmacy->uuid()->toString(),
             'redeemed_at'        => $this->redeemedAt->toStr(),
         ];
     }

@@ -6,13 +6,14 @@ namespace App\Infrastructure\Doctrine\Type;
 
 use App\Domain\Exception\DateTimeException;
 use App\Domain\ValueObj\RedeemedAt;
+use DateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
 
 class RedeemedAtType extends DateTimeImmutableType
 {
-    const NAME = 'redeemedAt';
+    public const NAME = 'redeemedAt';
 
 
     /**
@@ -27,7 +28,7 @@ class RedeemedAtType extends DateTimeImmutableType
     /**
      * {@inheritdoc}
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return 'DateTime';
     }
@@ -37,33 +38,25 @@ class RedeemedAtType extends DateTimeImmutableType
      * {@inheritdoc}
      * @throws ConversionException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
-            return $value;
+            return null;
         }
 
         if ($value instanceof RedeemedAt) {
             return $value->toDateTime()->format($platform->getDateTimeFormatString());
         }
 
-        if ($value instanceof \DateTimeImmutable) {
+        if ($value instanceof DateTimeImmutable) {
             return $value->format($platform->getDateTimeFormatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', RedeemedAt::class]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', RedeemedAt::class]);
     }
 
 
-    /**
-     * {@inheritdoc}
-     * @throws ConversionException
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?RedeemedAt
     {
         if (null === $value || $value instanceof RedeemedAt) {
             return $value;
@@ -71,12 +64,8 @@ class RedeemedAtType extends DateTimeImmutableType
 
         try {
             $dateTime = RedeemedAt::fromStr($value);
-        } catch (DateTimeException $e) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeFormatString()
-            );
+        } catch (DateTimeException) {
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeFormatString());
         }
 
         return $dateTime;

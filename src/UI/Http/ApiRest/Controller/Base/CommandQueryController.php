@@ -5,40 +5,33 @@ declare(strict_types=1);
 namespace App\UI\Http\ApiRest\Controller\Base;
 
 use App\Infrastructure\EventSubscriber\LoaderEventSubscribers;
-use League\Tactician\CommandBus;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-class CommandQueryController
+class CommandQueryController extends AbstractController
 {
-    /** @var CommandBus */
-    private $commandBus;
-
-    /** @var CommandBus */
-    private $queryBus;
-
-
-    /**
-     * CommandQueryController constructor.
-     * @param CommandBus             $commandBus
-     * @param CommandBus             $queryBus
-     * @param LoaderEventSubscribers $loaderSubscribers
-     */
-    public function __construct(CommandBus $commandBus, CommandBus $queryBus, LoaderEventSubscribers $loaderSubscribers)
-    {
-        $this->commandBus = $commandBus;
-        $this->queryBus   = $queryBus;
-
+    public function __construct(
+        private readonly MessageBusInterface $queryBus,
+        private readonly MessageBusInterface $commandBus,
+        LoaderEventSubscribers $loaderSubscribers
+    ) {
         unset($loaderSubscribers);
     }
 
 
-    protected function handleCommand($command)
+    protected function commandHandler($command)
     {
-        return $this->commandBus->handle($command);
+        $envelope = $this->commandBus->dispatch($command);
+
+        return ($envelope->last(HandledStamp::class))->getResult();
     }
 
 
-    protected function handleQuery($query)
+    protected function queryHandler($query)
     {
-        return $this->queryBus->handle($query);
+        $envelope = $this->queryBus->dispatch($query);
+
+        return ($envelope->last(HandledStamp::class))->getResult();
     }
 }

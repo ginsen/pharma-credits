@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\Entity;
+namespace App\Tests\Unit\Domain\Entity;
 
 use App\Domain\Entity\Client;
 use App\Domain\Entity\Pharmacy;
@@ -11,7 +11,6 @@ use App\Domain\ValueObj\AwardedAt;
 use App\Domain\ValueObj\ClientName;
 use App\Domain\ValueObj\PharmacyName;
 use App\Domain\ValueObj\RedeemedAt;
-use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
@@ -19,7 +18,6 @@ class PointTest extends TestCase
 {
     /**
      * @test
-     * @throws AssertionFailedException|\Exception
      */
     public function it_should_create_award_point()
     {
@@ -36,7 +34,6 @@ class PointTest extends TestCase
 
     /**
      * @test
-     * @throws AssertionFailedException|\Exception
      */
     public function it_should_can_be_redeeming()
     {
@@ -57,7 +54,6 @@ class PointTest extends TestCase
 
     /**
      * @test
-     * @throws AssertionFailedException|\Exception
      */
     public function it_should_return_pharmacy_on_awarding()
     {
@@ -66,13 +62,12 @@ class PointTest extends TestCase
         $awardedAt = AwardedAt::now();
 
         $point = Point::createAwardPoint($client, $pharmacy, $awardedAt);
-        self::assertSame($pharmacy, $point->getPharmacyAwarding());
+        self::assertSame($pharmacy, $point->pharmacyAwarding());
     }
 
 
     /**
      * @test
-     * @throws AssertionFailedException|\Exception
      */
     public function it_should_return_pharmacy_on_redeeming()
     {
@@ -81,20 +76,19 @@ class PointTest extends TestCase
         $awardedAt = AwardedAt::now();
 
         $point = Point::createAwardPoint($client, $pharmacy, $awardedAt);
-        self::assertSame($pharmacy, $point->getPharmacyAwarding());
+        self::assertSame($pharmacy, $point->pharmacyAwarding());
 
         $pharmacyOnRedeeming = $this->makePharmacy('pharmacy on redeeming');
         $redeemedAt          = RedeemedAt::now();
 
         $point->redeem($pharmacyOnRedeeming, $redeemedAt);
 
-        self::assertSame($pharmacyOnRedeeming, $point->getPharmacyRedeeming());
+        self::assertSame($pharmacyOnRedeeming, $point->pharmacyRedeeming());
     }
 
 
     /**
      * @test
-     * @throws AssertionFailedException|\Exception
      */
     public function it_should_return_user_of_point()
     {
@@ -103,26 +97,16 @@ class PointTest extends TestCase
         $awardedAt = AwardedAt::now();
 
         $point = Point::createAwardPoint($client, $pharmacy, $awardedAt);
-        self::assertSame($client, $point->getClient());
+        self::assertSame($client, $point->client());
     }
 
 
-    /**
-     * @param string $name
-     * @throws AssertionFailedException|\Exception
-     * @return Client
-     */
     protected function makeClient(string $name): Client
     {
         return Client::create(Uuid::uuid4(), ClientName::fromStr($name));
     }
 
 
-    /**
-     * @param string $name
-     * @throws AssertionFailedException|\Exception
-     * @return Pharmacy
-     */
     protected function makePharmacy(string $name): Pharmacy
     {
         return Pharmacy::create(Uuid::uuid4(), PharmacyName::fromStr($name));

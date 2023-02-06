@@ -10,14 +10,9 @@ use Ramsey\Uuid\UuidInterface;
 
 class AwardPointDatesQuery
 {
-    /** @var UuidInterface */
-    public $pharmacyUuid;
-
-    /** @var AwardedAt */
-    public $dateInit;
-
-    /** @var AwardedAt */
-    public $dateEnd;
+    private UuidInterface $pharmacyUuid;
+    private AwardedAt $dateInit;
+    private AwardedAt $dateEnd;
 
 
     public function __construct(string $uuid, string $dateInit, string $dateEnd)
@@ -29,5 +24,23 @@ class AwardPointDatesQuery
         $this->pharmacyUuid = Uuid::fromString($uuid);
         $this->dateInit     = AwardedAt::fromStr($dateInit);
         $this->dateEnd      = AwardedAt::fromStr($dateEnd);
+    }
+
+
+    public function pharmacyUuid(): UuidInterface
+    {
+        return $this->pharmacyUuid;
+    }
+
+
+    public function dateInit(): AwardedAt
+    {
+        return $this->dateInit;
+    }
+
+
+    public function dateEnd(): AwardedAt
+    {
+        return $this->dateEnd;
     }
 }

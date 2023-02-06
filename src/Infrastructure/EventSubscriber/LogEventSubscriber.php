@@ -10,24 +10,12 @@ use Psr\Log\LoggerInterface;
 
 class LogEventSubscriber implements DomainEventSubscriberInterface
 {
-    /** @var LoggerInterface */
-    private $logger;
-
-
-    /**
-     * LogEventSubscriber constructor.
-     * @param LoggerInterface $logger
-     */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private readonly LoggerInterface $logger
+    ) {
     }
 
 
-    /**
-     * @param EventInterface $event
-     * @param null $data
-     */
     public function handle(EventInterface $event, $data = null): void
     {
         $this->logger->info($event->serialize());

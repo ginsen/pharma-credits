@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\ValueObj;
+namespace App\Tests\Unit\Domain\ValueObj;
 
 use App\Domain\ValueObj\ClientName;
-use Assert\AssertionFailedException;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ClientNameTest extends TestCase
 {
     /**
      * @test
-     * @throws AssertionFailedException
      */
     public function it_should_return_name()
     {
@@ -25,11 +24,10 @@ class ClientNameTest extends TestCase
 
     /**
      * @test
-     * @throws AssertionFailedException
      */
     public function it_should_launch_exception()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         ClientName::fromStr('Nunc quoniam ita accidit ut neque praetores suis opibus neque');
     }

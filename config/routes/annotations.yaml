@@ -1,8 +1,7 @@
-web_controllers:
+controllers:
     resource: ../../src/UI/Http/Web/Controller/
     type: annotation
 
-api_controllers:
-    resource: ../../src/UI/Http/ApiRest/Controller/
+kernel:
+    resource: ../../src/Infrastructure/Symfony/Kernel.php
     type: annotation
-    prefix: /api

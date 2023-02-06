@@ -1,9 +1,8 @@
-version:  '3'
+version:  '3.5'
 
 networks:
   default:
-    external:
-      name: ${EXTERNAL_NET}
+    name: ${EXTERNAL_NET}
 
 services:
   web:
@@ -23,7 +22,7 @@ services:
 
   nginx:
     container_name: ${APP}
-    image: nginx:1.15.3-alpine
+    image: nginx:1.23.3-alpine
     restart: on-failure
     volumes:
       - ./public/:/var/www/app

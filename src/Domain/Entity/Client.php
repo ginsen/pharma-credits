@@ -10,18 +10,18 @@ use App\Domain\Exception\PointException;
 use App\Domain\ValueObj\ClientName;
 use App\Domain\ValueObj\QuantityPoints;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\UuidInterface;
 
 class Client extends AggregateRoot
 {
-    /** @var UuidInterface */
-    private $uuid;
+    public const ALIAS   = 'c';
+    public const NAME    = 'client';
+    public const BALANCE = 'balance';
 
-    /** @var ClientName */
-    private $name;
-
-    /** @var ArrayCollection */
-    private $points;
+    private UuidInterface $uuid;
+    private ClientName $name;
+    private Collection $points;
 
 
     private function __construct()
@@ -30,55 +30,28 @@ class Client extends AggregateRoot
     }
 
 
-    /**
-     * @param UuidInterface $uuid
-     * @param ClientName    $name
-     * @return self
-     */
     public static function create(UuidInterface $uuid, ClientName $name): self
     {
         $instance       = new self();
         $instance->uuid = $uuid;
-        $instance->setName($name);
+        $instance->name = $name;
 
         return $instance;
     }
 
 
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
+    public function uuid(): UuidInterface
     {
         return $this->uuid;
     }
 
 
-    /**
-     * @return ClientName
-     */
-    public function getName(): ClientName
+    public function name(): ClientName
     {
         return $this->name;
     }
 
 
-    /**
-     * @param ClientName $name
-     * @return self
-     */
-    protected function setName(ClientName $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-
-    /**
-     * @param Point $point
-     * @return self
-     */
     public function addPoint(Point $point): self
     {
         if (!$point->isAvailableForClient()) {
@@ -92,10 +65,9 @@ class Client extends AggregateRoot
 
 
     /**
-     * @param QuantityPoints $quantity
      * @return Point[]
      */
-    public function getPoints(QuantityPoints $quantity): array
+    public function points(QuantityPoints $quantity): array
     {
         if (!$this->hasEnoughPoints($quantity)) {
             throw new ClientException("Client don't has enough points");
@@ -103,14 +75,17 @@ class Client extends AggregateRoot
 
         $collection = $this->getAvailablePoints();
 
-        return $collection->slice(0, $quantity->toNumber());
+        return $collection->slice(0, $quantity->toInt());
     }
 
 
-    /**
-     * @return ArrayCollection|Point[]
-     */
-    public function getAvailablePoints(): ArrayCollection
+    public function getCountAvailablePoints(): int
+    {
+        return $this->getAvailablePoints()->count();
+    }
+
+
+    private function getAvailablePoints(): ArrayCollection
     {
         return $this->points->filter(function (Point $point) {
             return $point->isAvailableForClient();
@@ -118,21 +93,8 @@ class Client extends AggregateRoot
     }
 
 
-    /**
-     * @return int
-     */
-    public function getCountAvailablePoints(): int
+    private function hasEnoughPoints(QuantityPoints $quantity): bool
     {
-        return \count($this->getAvailablePoints());
-    }
-
-
-    /**
-     * @param QuantityPoints $quantity
-     * @return bool
-     */
-    protected function hasEnoughPoints(QuantityPoints $quantity): bool
-    {
-        return $this->getCountAvailablePoints() >= $quantity->toNumber();
+        return $this->getCountAvailablePoints() >= $quantity->toInt();
     }
 }

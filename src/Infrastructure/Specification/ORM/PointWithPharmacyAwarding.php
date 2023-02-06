@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Specification\ORM;
 
 use App\Domain\Entity\Pharmacy;
-use App\Infrastructure\Repository\PointReadModel;
+use App\Domain\Entity\Point;
 use App\Infrastructure\Specification\Common\ORM\OrmSpecification;
 use Doctrine\ORM\Query\Expr;
 
@@ -19,8 +19,8 @@ class PointWithPharmacyAwarding extends OrmSpecification
     }
 
 
-    public function getConditions()
+    public function getConditions(): Expr\Comparison
     {
-        return $this->expr->eq(PointReadModel::ENTITY_ALIAS . '.pharmacyAwarding', ':pharmacy');
+        return $this->expr->eq(Point::ALIAS . '.pharmacyAwarding', ':pharmacy');
     }
 }

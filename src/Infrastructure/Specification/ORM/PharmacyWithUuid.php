@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Specification\ORM;
 
-use App\Infrastructure\Repository\PharmacyReadModel;
+use App\Domain\Entity\Pharmacy;
 use App\Infrastructure\Specification\Common\ORM\OrmSpecification;
 use Doctrine\ORM\Query\Expr;
 use Ramsey\Uuid\UuidInterface;
@@ -19,8 +19,8 @@ class PharmacyWithUuid extends OrmSpecification
     }
 
 
-    public function getConditions()
+    public function getConditions(): Expr\Comparison
     {
-        return $this->expr->eq(PharmacyReadModel::ENTITY_ALIAS . '.uuid', ':uuid');
+        return $this->expr->eq(Pharmacy::ALIAS . '.uuid', ':uuid');
     }
 }

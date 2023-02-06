@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\ValueObj;
 
 use Assert\Assertion;
-use Assert\AssertionFailedException;
 
 trait TraitName
 {
-    /** @var string */
-    protected $name;
+    protected string $name;
 
 
     /**
-     * @param string $name
-     * @throws AssertionFailedException
-     * @return self
+     * @throws
      */
     public static function fromStr(string $name): self
     {
@@ -29,9 +25,6 @@ trait TraitName
     }
 
 
-    /**
-     * @return string
-     */
     public function toStr(): string
     {
         return $this->name;
@@ -42,6 +35,7 @@ trait TraitName
     {
         return $this->toStr();
     }
+
 
     private function __construct()
     {

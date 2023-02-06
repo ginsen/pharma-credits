@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM nanoninja/php-fpm:8.1
 
 ARG TIMEZONE
 ARG USER
@@ -9,15 +9,15 @@ ARG XDEBUG_REMOTE_HOST
 ARG XDEBUG_REMOTE_PORT
 
 # Install APT basic packages
-RUN apt update && apt install -y curl git-all git-flow unzip vim curl ccze gnupg bash-completion zlib1g-dev libicu-dev
+RUN apt update && apt install -y curl unzip vim ccze gnupg bash-completion git
 
 # Install APT repositories
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 # Install APT packages nodejs & yarn
-RUN apt-get update && apt-get install -y nodejs yarn npm
+RUN apt-get update && apt-get install -y nodejs yarn
 
 # Sonar Scanner
 RUN npm i -g sonarqube-scanner
@@ -27,23 +27,17 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 RUN printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini
 RUN "date"
 
-# Type docker-php-ext-install to see available extensions
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install pdo_mysql bcmath intl
-RUN pecl install apcu-5.1.8
-RUN docker-php-ext-enable apcu
+
 
 # install xdebug
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
 RUN echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=${XDEBUG_REMOTE_PORT}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=debug,coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.client_port = ${XDEBUG_CLIENT_PORT}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.discover_client_host = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.start_with_request = yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.log_level = 0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php && \

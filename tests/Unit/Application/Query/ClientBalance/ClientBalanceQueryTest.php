@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Query\ClientBalance;
+namespace App\Tests\Unit\Application\Query\ClientBalance;
 
 use App\Application\Query\ClientBalance\ClientBalanceQuery;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +13,6 @@ class ClientBalanceQueryTest extends TestCase
 {
     /**
      * @test
-     * @throws \Exception
      */
     public function it_should_create_one_instance()
     {
@@ -27,7 +26,6 @@ class ClientBalanceQueryTest extends TestCase
 
     /**
      * @test
-     * @throws \Exception
      */
     public function it_should_return_client_uuid()
     {
@@ -36,6 +34,6 @@ class ClientBalanceQueryTest extends TestCase
         $command = new ClientBalanceQuery($clientUuid->toString());
 
         self::assertInstanceOf(ClientBalanceQuery::class, $command);
-        self::assertInstanceOf(UuidInterface::class, $command->clientUuid);
+        self::assertInstanceOf(UuidInterface::class, $command->clientUuid());
     }
 }

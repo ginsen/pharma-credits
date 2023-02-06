@@ -6,17 +6,12 @@ namespace App\Infrastructure\Doctrine\DataFixtures;
 
 use App\Domain\Entity\Pharmacy;
 use App\Domain\ValueObj\PharmacyName;
-use Assert\AssertionFailedException;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 
 class PharmacyFixtures extends Fixture
 {
-    /**
-     * @param ObjectManager $manager
-     * @throws AssertionFailedException|\Exception
-     */
     public function load(ObjectManager $manager)
     {
         foreach (['Verdaguer', 'Companys', 'Canigó'] as $name) {

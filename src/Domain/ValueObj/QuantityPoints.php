@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\ValueObj;
 
 use Assert\Assertion;
-use Assert\AssertionFailedException;
 
 class QuantityPoints
 {
-    /** @var int */
-    protected $quantity;
+    protected int $quantity;
 
 
     /**
-     * @param int $quantity
-     * @throws AssertionFailedException
-     * @return QuantityPoints
+     * @throws
      */
     public static function fromInt(int $quantity): self
     {
@@ -32,7 +28,7 @@ class QuantityPoints
     /**
      * @return int
      */
-    public function toNumber(): int
+    public function toInt(): int
     {
         return $this->quantity;
     }
@@ -40,7 +36,7 @@ class QuantityPoints
 
     public function __toString(): string
     {
-        return (string) $this->toNumber();
+        return (string) $this->toInt();
     }
 
 

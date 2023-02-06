@@ -1,0 +1,34 @@
+parameters:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+
+  layers:
+    # DDD layers
+    -
+      name: Application
+      collectors:
+        -
+          type: className
+          regex: App\\Application\\.*
+    -
+      name: Infrastructure
+      collectors:
+        -
+          type: className
+          regex: App\\Infrastructure\\.*
+    -
+      name: Domain
+      collectors:
+        -
+          type: className
+          regex: App\\Domain\\.*
+  ruleset:
+    # DDD layers
+    Domain:
+    Application:
+      - Domain
+    Infrastructure:
+      - Domain
+      - Application

@@ -13,23 +13,15 @@ use Ramsey\Uuid\UuidInterface;
 
 class OrmPharmacySpecificationFactory implements PharmacySpecificationFactoryInterface
 {
-    /** @var Expr */
-    private $expr;
+    private Expr $expr;
 
-    /**
-     * OrmPharmacySpecificationFactory constructor.
-     * @param EntityManagerInterface $entityManager
-     */
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->expr = $entityManager->getExpressionBuilder();
     }
 
 
-    /**
-     * @param UuidInterface $uuid
-     * @return SpecificationInterface
-     */
     public function createForFindOneWithUuid(UuidInterface $uuid): SpecificationInterface
     {
         return new PharmacyWithUuid($this->expr, $uuid);

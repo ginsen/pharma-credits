@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\Event\Publisher;
+namespace App\Tests\Unit\Domain\Event\Publisher;
 
 use App\Domain\Event\Common\EventInterface;
 use App\Domain\Event\Publisher\DomainEventPublisher;
 use App\Domain\Event\Subscriber\DomainEventSubscriberInterface;
+use BadMethodCallException;
 use PHPUnit\Framework\TestCase;
 
 class DomainEventPublisherTest extends TestCase implements DomainEventSubscriberInterface, EventInterface
 {
-    /** @var bool */
-    private $handleSubscriber = false;
+    private bool $handleSubscriber = false;
 
 
     /**
@@ -32,12 +32,13 @@ class DomainEventPublisherTest extends TestCase implements DomainEventSubscriber
      */
     public function it_should_throw_exception_when_clone_it()
     {
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
 
         $eventPublisher = DomainEventPublisher::instance();
         $clone          = clone $eventPublisher;
         unset($clone);
     }
+
 
     public function handle(EventInterface $event, $data = null): void
     {
